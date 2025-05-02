@@ -1,7 +1,7 @@
-- #F2564F
-- #2B2A31
-- #F3ECDE fondo
-- #3d3b46
-- #575463
+- #F2564F button
+- #2B2A31 fondo
+- #F3ECDE texto
+- #3d3b46 fondo secundario
+- #575463 hover
 
 

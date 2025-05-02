@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center items-center h-screen">
+    <div class="flex justify-center items-start h-screen m-20">
         <form class="w-full max-w-md bg-[#3d3b46] p-6 sm:p-8 md:p-10 shadow-md">
             <div class="mb-4">
                 <label 

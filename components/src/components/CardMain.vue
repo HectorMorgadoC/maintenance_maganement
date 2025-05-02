@@ -1,6 +1,6 @@
 <template>
     <div class="w-120 h-80 max-w-md bg-[#3d3b46] p-6 sm:p-8 md:p-8 shadow-md hover:bg-[#575463] overflow-hidden break-words">     
-        <a href="sdfsdfdsfsadfa" >
+        <a href="https://claude.ai/chat/18a085f5-56c7-4014-9cee-8e73ce81f40a" >
             <h3 
             class="mb-5 block text-4xl font-extrabolt text-[#F2564F] mb-1"
             >{{ title }}</h3>
