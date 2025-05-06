@@ -11,9 +11,9 @@
       title-button-one="Modificar" 
       title-button-two="Eliminar"
       :data= data />
-       
+       <SearchForm />
   -->
-  <UpdateResource />
+  <ApproveRegistration :data="data" :production="true" :maintenance="true" />
 </template>
 
 <script setup lang="ts">
@@ -25,6 +25,9 @@ import SubMenu from './components/SubMenu.vue';
 import UpdateDelede from './components/ActionPanel.vue';
 import CreateResource from './components/CreateResource.vue';
 import UpdateResource from './components/UpdateResource.vue';
+import SearchForm from './components/SearchForm.vue';
+import CardInfo from './components/CardInfo.vue';
+import ApproveRegistration from './components/ApproveRegistration.vue';
 
 
 const data = {

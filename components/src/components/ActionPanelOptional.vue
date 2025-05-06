@@ -4,6 +4,7 @@
             <h3 class="block text-xl font-medium text-[#F3ECDE] mb-1">{{ props.title }}</h3>
             <div class="flex flex-rows items-center ">
                 <button @click="" class="w-full bg-[#F2564F] text-white p-3  m-5 font-semibold hover:bg-green-600 transition"> Modificar </button>
+                <button @click="" class="w-full bg-[#F2564F] text-white p-3  m-5 font-semibold hover:bg-green-600 transition"> Aprobar </button>
                 <button @click="selectItem(props.data)" class="w-full bg-[#F2564F] text-white p-3  m-5 font-semibold hover:bg-green-600 transition">Eliminar</button>
             </div>
         </div>

@@ -40,6 +40,6 @@ const deleteInfo = () => {
 }
 
 const cancelAction = () => {
-    emit('cancel');
+    emit('cancel',false);
 }
 </script>
