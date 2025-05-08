@@ -1,13 +1,13 @@
 <template>
-    <div class="flex justify-center items-start h-screen m-20">
+    <div class="flex justify-center items-start h-screen mx-4 sm:mx-8 md:mx-20 my-10">
         <form v-if="!onStatus" @submit.prevent="onRegister" class="w-full max-w-md bg-[#3d3b46] p-6 sm:p-8 md:p-10 shadow-md">
             <h3 
-            class="mb-5 block text-4xl text-center font-extrabolt text-[#F2564F] mb-1"
+            class="mb-5 block text-4xl text-center font-extrabolt text-[#EEE0D3] mb-1"
             >Registrar producto</h3>
             <div class="mb-3">
                 <label 
                     for="client" 
-                    class="block text-sm font-medium text-gray-500 mb-1"
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
                     Nombre
                 </label>
@@ -25,7 +25,7 @@
             <div class="mb-3">
                 <label 
                     for="lastname" 
-                    class="block text-sm font-medium text-gray-500 mb-1"
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
                     Apellido
                 </label>
@@ -43,7 +43,7 @@
             <div class="mb-3">
                 <label 
                     for="city" 
-                    class="block text-sm font-medium text-gray-500 mb-1"
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
                     Ciudad
                 </label>
@@ -61,7 +61,7 @@
             <div class="mb-3">
                 <label 
                     for="city" 
-                    class="block text-sm font-medium text-gray-500 mb-1"
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
                     Fecha de nacimiento
                 </label>
@@ -78,7 +78,7 @@
             <button
                 @click="registerInfo"
                 type="submit"
-                class="w-full bg-[#F2564F] text-white py-3 mt-3 font-semibold hover:bg-green-600 transition"
+                class="w-full bg-[#FC3B47] text-xl text-[#EEE0D3] py-3 mt-4 font-semibold hover:bg-[#F2564F] transition"
             >
                 Registrar
             </button>

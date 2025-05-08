@@ -5,21 +5,17 @@
           alt="logo" 
           class="max-w-50 max-h-100">
   </picture>
+   
+ <UpdateResource />
   <!-- 
-  <UpdateDelede 
-      title="ysodfdsdbsdsasdf" 
-      title-button-one="Modificar" 
-      title-button-two="Eliminar"
-      :data= data />
-       <SearchForm />
+       <ApproveRegistration :data="data" :production="true" :maintenance="true" />
   -->
-  <ApproveRegistration :data="data" :production="true" :maintenance="true" />
+  
+
 </template>
 
 <script setup lang="ts">
 import MenuMain from './components/MenuMain.vue';
-
-// import CardMain from './components/CardMain.vue';
 import FormLogin from './components/FormLogin.vue';
 import SubMenu from './components/SubMenu.vue';
 import UpdateDelede from './components/ActionPanel.vue';

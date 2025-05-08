@@ -4,7 +4,7 @@
             <div class="mb-4">
                 <label 
                     for="client" 
-                    class="block text-sm font-medium text-gray-500 mb-1"
+                    class="block font-medium text-[#EEE0D3] my-2"
                 >
                     Cliente
                 </label>
@@ -14,14 +14,13 @@
                     name="client"
                     required
                     placeholder="Ingrese nombre del cliente"
-                    class="placeholder-gray-400 w-full px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
+                    class="placeholder-gray-400 w-full px-4 py-3 text-[#98B6B6] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 />
             </div>
-
             <div class="mb-4">
                 <label 
                     for="password" 
-                    class="block text-sm font-medium text-gray-500 mb-1"
+                    class="block font-medium text-[#EEE0D3] my-2"
                 >
                     Contraseña
                 </label>
@@ -34,14 +33,12 @@
                     class="placeholder-gray-400 w-full px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 />
             </div>
-
             <button
                 type="submit"
-                class="w-full bg-[#F2564F] text-white py-3  font-semibold hover:bg-green-600 transition"
+                class="w-full bg-[#FC3B47] text-[#EEE0D3] py-3 mt-4 font-semibold hover:bg-[#F2564F] transition"
             >
                 Iniciar sesión
             </button>
         </form>
     </div>
-    
 </template>

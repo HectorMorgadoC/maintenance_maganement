@@ -1,13 +1,13 @@
 <template>
-    <div v-if="!isEditMode" class="flex flex-col justify-center items-center h-screen">
+    <div v-if="!isEditMode" class="flex flex-col justify-center items-center min-h-screen">
         <form @submit.prevent="onSearch" class="w-full max-w-md bg-[#3d3b46] p-6 sm:p-8 md:p-10 shadow-md">
             <h3 
-            class="mb-5 block text-4xl text-center font-extrabolt text-[#F2564F] mb-1"
+            class="mb-5 block text-4xl text-center font-extrabolt text-[#EEE0D3] mb-1"
             >Busqueda de producto</h3>
             <div class="mb-3">
                 <label 
                     for="client" 
-                    class="block text-sm font-medium text-gray-500 mb-1"
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
                     Nombre
                 </label>
@@ -24,7 +24,7 @@
             <div class="mb-3">
                 <label 
                     for="lastname" 
-                    class="block text-sm font-medium text-gray-500 mb-1"
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
                     Apellido
                 </label>
@@ -41,7 +41,7 @@
             <div class="mb-3">
                 <label 
                     for="city" 
-                    class="block text-sm font-medium text-gray-500 mb-1"
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
                     Ciudad
                 </label>
@@ -58,7 +58,7 @@
             <div class="mb-3">
                 <label 
                     for="city" 
-                    class="block text-sm font-medium text-gray-500 mb-1"
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
                     Fecha de nacimiento
                 </label>
@@ -73,25 +73,27 @@
 
             <button
                 type="submit"
-                class="w-full bg-[#F2564F] text-white py-3 mt-3 font-semibold hover:bg-green-600 transition"
+                class="w-full bg-[#FC3B47] text-xl text-[#EEE0D3] py-3 mt-4 font-semibold hover:bg-[#F2564F] transition"
             >
                 Registrar
             </button>
         </form>
-        <div class="flex gap-[20px] flex-wrap justify-center items-center content-center list-none mt-10">
+        <div class="flex gap-[20px] flex-row flex-wrap justify-center items-center content-center list-none mt-10">
             <div v-if="producto.length <= 0" >
-                <h3 class="mb-5 block text-4xl text-center font-extrabolt text-[#F2564F] mb-1">No hay registro</h3>
+                <h3 class="mb-5 block text-4xl text-center font-extrabolt text-[#EEE0D3] mb-1">No hay registro</h3>
             </div>
-            <div v-else>
-                <li v-for="item of producto" >
-                    <ul  class="w-fit flex flex-col justify-center items-start p-8 text-2xl text-[#F3ECDE] bg-[#3d3b46] hover:bg-[#575463] overflow-hidden break-words">
+            <div v-else
+            class="flex flex-row flex-wrap justify-center items center text-[#EEE0D3] font-medium text-xl"
+            >
+                <div v-for="item of producto" >
+                    <p  class="p-8 text-2xl text-[#F3ECDE] bg-[#3d3b46] hover:bg-[#575463] overflow-hidden break-words mx-10 my-5">
                         <button @click="selectItem(item)">
-                            <li v-for="[key, value] in Object.entries(item)" :key="key" class="my-1">
+                            <li v-for="[key, value] in Object.entries(item)" :key="key" class="text-[#EEE0D3] text-justify font-medium text-2xl py-1">
                                 {{ key }}: {{ value }}
                             </li>
                         </button>
-                    </ul>
-                </li>
+                    </p>
+                </div>
             </div>
         </div>
     </div>

@@ -1,9 +1,9 @@
 <template>
-    <div class="flex flex-col items-center w-full gap-4 lg:flex-row lg:justify-between">
+    <div class="flex flex-col items-center w- gap-4 lg:flex-row lg:justify-between">
         <div class="">
-            <p class="text-white text-3xl lg:ml-20">{{ title }}</p>
+            <p class="text-[#EEE0D3] text-3xl lg:ml-20">{{ title }}</p>
         </div>
-        <div class="bg-[#F2564F] text-white py-3 px-4 lg:mr-20 font-semibold hover:bg-green-600 transition">
+        <div class="bg-[#FC3B47] text-[#EEE0D3] text-xl py-4 px-5 lg:mr-20 font-semibold hover:bg-[#F2564F] transition">
             <a :href="patch">
                 {{ titleButton }}
             </a>
