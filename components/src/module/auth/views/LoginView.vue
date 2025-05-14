@@ -3,6 +3,7 @@
         <form 
             @submit.prevent="onLogin"
             class="w-full max-w-md bg-[#3d3b46] p-6 sm:p-8 md:p-10 shadow-md">
+            <h2 v-if="statusExceptionMessage" class="text-[#FC3B47] text-2xl">{{ exceptionMessage }}</h2>
             <div class="mb-4">
                 <label 
                     for="client" 
@@ -11,6 +12,7 @@
                     Cliente
                 </label>
                 <input
+                    @click="statusExceptionMessage = false"
                     v-model="myForm.username"
                     type="client"
                     id="client"
@@ -29,6 +31,7 @@
                     Contraseña
                 </label>
                 <input
+                    @click="statusExceptionMessage = false"
                     v-model="myForm.password"
                     type="password"
                     id="password"
@@ -57,6 +60,8 @@ import { useAuthStore } from '../stores/auth.store';
     const authStores = useAuthStore();
     const clientInputRef = ref<HTMLInputElement | null>(null);
     const passwordInputRef = ref<HTMLInputElement | null>(null);
+    const statusExceptionMessage = ref<boolean>(false) 
+    const exceptionMessage = ref<string>("");
 
     const myForm = reactive({
         username: "",
@@ -73,8 +78,13 @@ import { useAuthStore } from '../stores/auth.store';
             return passwordInputRef.value?.focus()
         }
 
-        const ok = await authStores.login(myForm.username,myForm.password)
-        console.log(ok)
+        const login = await authStores.login(myForm.username,myForm.password)
+
+        if(!login) {
+            exceptionMessage.value = authStores.message
+            statusExceptionMessage.value = true
+        }
+        
     }
 
     

@@ -3,25 +3,33 @@ import { defineStore } from 'pinia';
 import { AuthStatus } from '../interfaces/auth-status.enum';
 import type { Client } from '../interfaces/client.interface';
 import { loginAction } from '../action/login.action';
-import { useCookies } from 'vue3-cookies';
+import { cookies } from '../action/cookies';
 
-const { cookies } = useCookies();
 
 export const useAuthStore = defineStore('auth', () => {
   const authStatus = ref<AuthStatus>(AuthStatus.Checking);
   const client = ref<Client | undefined>();
   const token = ref<string>(cookies.get('token') || '');
+  const message = ref<string>("");
 
   const login = async (username: string, password: string) => {
     try {
       const loginResponse = await loginAction(username, password);
       if ('error' in loginResponse) {
         logout();
+        if( loginResponse.statusCode === 400 ){
+          message.value = "El nombre del cliente debe tener entre 5 y 30 caracteres. La contraseña debe incluir al menos una mayúscula, una minúscula y un número, y tener entre 6 y 20 caracteres"
+        }
+        if( loginResponse.statusCode === 401 ){
+          message.value = "Nombre del cliente o contraseña invalidos"
+        }
+        if( loginResponse.statusCode === 500 ){
+
+        }
         return false;
       }
 
       client.value = loginResponse;
-      //token.value = loginResponse.token;
       authStatus.value = AuthStatus.Authenticated;
 
       return true;
@@ -39,6 +47,8 @@ export const useAuthStore = defineStore('auth', () => {
     token.value = '';
     return false;
   };
+
+
 /*
   const checkAuthStatus = async (): Promise<boolean> => {
     try {
@@ -63,6 +73,7 @@ export const useAuthStore = defineStore('auth', () => {
     client: client,
     token,
     authStatus,
+    message,
 
     // Getters
     isChecking: computed(() => authStatus.value === AuthStatus.Checking),
