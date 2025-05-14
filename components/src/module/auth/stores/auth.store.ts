@@ -4,6 +4,7 @@ import { AuthStatus } from '../interfaces/auth-status.enum';
 import type { Client } from '../interfaces/client.interface';
 import { loginAction } from '../action/login.action';
 import { cookies } from '../action/cookies';
+import { checkAuthAction } from '../action/check-auth.action';
 
 
 export const useAuthStore = defineStore('auth', () => {
@@ -49,7 +50,7 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
 
-/*
+
   const checkAuthStatus = async (): Promise<boolean> => {
     try {
       const statusResp = await checkAuthAction();
@@ -60,7 +61,7 @@ export const useAuthStore = defineStore('auth', () => {
       }
 
       authStatus.value = AuthStatus.Authenticated;
-      client.value = statusResp.user;
+      client.value = statusResp.client;
       token.value = statusResp.token;
       return true;
     } catch (error) {
@@ -68,12 +69,13 @@ export const useAuthStore = defineStore('auth', () => {
       return false;
     }
   };
-*/
+
   return {
     client: client,
     token,
     authStatus,
     message,
+    checkAuthStatus,
 
     // Getters
     isChecking: computed(() => authStatus.value === AuthStatus.Checking),
