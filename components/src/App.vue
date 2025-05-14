@@ -5,30 +5,13 @@
           alt="logo" 
           class="max-w-50 max-h-100">
   </picture>
-   
- <UpdateResource />
-  <!-- 
-       <ApproveRegistration :data="data" :production="true" :maintenance="true" />
-  -->
-  
+  <LoginView />
 
 </template>
 
 <script setup lang="ts">
-import MenuMain from './components/MenuMain.vue';
-import FormLogin from './components/FormLogin.vue';
-import SubMenu from './components/SubMenu.vue';
-import UpdateDelede from './components/ActionPanel.vue';
-import CreateResource from './components/CreateResource.vue';
-import UpdateResource from './components/UpdateResource.vue';
-import SearchForm from './components/SearchForm.vue';
-import CardInfo from './components/CardInfo.vue';
-import ApproveRegistration from './components/ApproveRegistration.vue';
+import LoginView from './module/auth/views/LoginView.vue';
 
 
-const data = {
-  id: 1213413412,
-  name: "Prueba 1",
-  lastname: "Prueba2"
-}
+
 </script>
