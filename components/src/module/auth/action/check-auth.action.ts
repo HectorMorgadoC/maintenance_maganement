@@ -22,8 +22,8 @@ export const checkAuthAction = async (): Promise<CheckError | CheckSuccess> => {
       return { ok: false };
     }
 
-    const { data } = await managementApi.get<AuthResponse>('/auth/check-status');
 
+    const { data } = await managementApi.get<AuthResponse>('/client/login/check');
     return {
       ok: true,
       client: data.client,

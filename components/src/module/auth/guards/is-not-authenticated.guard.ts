@@ -3,15 +3,17 @@ import { useAuthStore } from '../stores/auth.store';
 import { AuthStatus } from '../interfaces/auth-status.enum';
 
 
-const isAuthenticatedGuard = async (
+const isNotAuthenticatedGuard = async (
   to: RouteLocationNormalized,
   from: RouteLocationNormalized,
   next: NavigationGuardNext,
 ) => {
   const authStore = useAuthStore();
+
+  // console.log(to);
   await authStore.checkAuthStatus();
 
-  authStore.authStatus === AuthStatus.Unauthenticated ? next({ name: 'NotFount' }) : next();
+  authStore.authStatus === AuthStatus.Authenticated ? next({ name: '/' }) : next();
 };
 
-export default isAuthenticatedGuard;
+export default isNotAuthenticatedGuard;

@@ -1,18 +1,19 @@
 import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import { AuthStatus } from '../interfaces/auth-status.enum';
-import type { Client } from '../interfaces/client.interface';
 import { loginAction } from '../action/login.action';
 
 import { checkAuthAction } from '../action/check-auth.action';
 import { useCookies } from 'vue3-cookies';
 import { useClientStorage } from '../composable/useClientStorage';
+import { useRouter } from 'vue-router';
 
 export const useAuthStore = defineStore('auth', () => {
   const { cookies } = useCookies();
   const authStatus = ref<AuthStatus>(AuthStatus.Checking);
   const token = ref<string>(cookies.get('token') || '');
   const message = ref<string>("");
+  const router  = useRouter()
   
   let {
     client,
@@ -29,13 +30,13 @@ export const useAuthStore = defineStore('auth', () => {
       if ('error' in loginResponse) {
         logout();
         if( loginResponse.statusCode === 400 ){
-          message.value = "El nombre del cliente debe tener entre 5 y 30 caracteres. La contraseña debe incluir al menos una mayúscula, una minúscula y un número, y tener entre 6 y 20 caracteres"
+            message.value = "El nombre del cliente debe tener entre 5 y 30 caracteres. La contraseña debe incluir al menos una mayúscula, una minúscula y un número, y tener entre 6 y 20 caracteres"
         }
         if( loginResponse.statusCode === 401 ){
-          message.value = "Nombre del cliente o contraseña invalidos"
+            message.value = "Nombre del cliente o contraseña invalidos"
         }
         if( loginResponse.statusCode === 500 ){
-
+          router.push('/error-500')
         }
         return false;
       }
@@ -71,7 +72,6 @@ export const useAuthStore = defineStore('auth', () => {
       }
 
       authStatus.value = AuthStatus.Authenticated;
-      saveClient(statusResp.client)
       token.value = statusResp.token;
       return true;
     } catch (error) {

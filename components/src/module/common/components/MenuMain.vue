@@ -51,7 +51,7 @@ import { AccessLevel } from '../../auth/interfaces/access-level.enum';
 const authStores = useAuthStore()
 const accessLevel = authStores.client?.access_level 
 
-if (accessLevel === AccessLevel.admin) {
+if (accessLevel === AccessLevel.operator) {
     console.log( "si" )
 }
 
