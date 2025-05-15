@@ -1,8 +1,8 @@
 import { isAxiosError } from 'axios';
-import { cookies } from './cookies';
 import { managementApi } from '../../../api/managementApi';
 import type { AuthResponse } from '../interfaces/auth.response';
 import type { Client } from '../interfaces/client.interface';
+import { useCookies } from 'vue3-cookies';
 
 interface CheckError {
   ok: false;
@@ -16,6 +16,7 @@ interface CheckSuccess {
 
 export const checkAuthAction = async (): Promise<CheckError | CheckSuccess> => {
   try {
+    const { cookies } = useCookies()
     const localToken = cookies.get("token");
     if (localToken && localToken.length < 10) {
       return { ok: false };

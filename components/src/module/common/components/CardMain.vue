@@ -4,7 +4,7 @@
             <h3 
             class="mb-5 block text-4xl font-extrabolt text-[#FC3B47] mb-1"
             >{{ title }}</h3>
-            <p class="text-[#EEE0D3] font-medium text-xl">
+            <p class="text-[#EEE0D3] font-medium text-xl pb-xl">
                 {{ message }}
             </p>
         </a>

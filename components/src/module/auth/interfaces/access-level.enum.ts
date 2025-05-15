@@ -1,7 +1,7 @@
 export enum AccessLevel {
-    admin,
-    production_supervisor,
-    technical_supervisor,
-    operator,
-    technical
+    admin =  "admin",
+    production_supervisor = "production_supervisor",
+    technical_supervisor = "technical_supervisor",
+    operator = "operator",
+    technical = "technical"
 }

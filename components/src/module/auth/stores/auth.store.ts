@@ -3,15 +3,25 @@ import { defineStore } from 'pinia';
 import { AuthStatus } from '../interfaces/auth-status.enum';
 import type { Client } from '../interfaces/client.interface';
 import { loginAction } from '../action/login.action';
-import { cookies } from '../action/cookies';
-import { checkAuthAction } from '../action/check-auth.action';
 
+import { checkAuthAction } from '../action/check-auth.action';
+import { useCookies } from 'vue3-cookies';
+import { useClientStorage } from '../composable/useClientStorage';
 
 export const useAuthStore = defineStore('auth', () => {
+  const { cookies } = useCookies();
   const authStatus = ref<AuthStatus>(AuthStatus.Checking);
-  const client = ref<Client | undefined>();
   const token = ref<string>(cookies.get('token') || '');
   const message = ref<string>("");
+  
+  let {
+    client,
+    saveClient,
+    clearClient,
+    loadClient
+  } = useClientStorage()
+
+  loadClient()
 
   const login = async (username: string, password: string) => {
     try {
@@ -30,7 +40,7 @@ export const useAuthStore = defineStore('auth', () => {
         return false;
       }
 
-      client.value = loginResponse;
+      saveClient(loginResponse)
       authStatus.value = AuthStatus.Authenticated;
 
       return true;
@@ -42,9 +52,9 @@ export const useAuthStore = defineStore('auth', () => {
 
   const logout = () => {
     cookies.remove('token');
+    clearClient()
 
     authStatus.value = AuthStatus.Unauthenticated;
-    client.value = undefined;
     token.value = '';
     return false;
   };
@@ -61,7 +71,7 @@ export const useAuthStore = defineStore('auth', () => {
       }
 
       authStatus.value = AuthStatus.Authenticated;
-      client.value = statusResp.client;
+      saveClient(statusResp.client)
       token.value = statusResp.token;
       return true;
     } catch (error) {
@@ -71,7 +81,7 @@ export const useAuthStore = defineStore('auth', () => {
   };
 
   return {
-    client: client,
+    client,
     token,
     authStatus,
     message,

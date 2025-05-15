@@ -56,12 +56,19 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import { useAuthStore } from '../stores/auth.store';
+import { useRouter } from 'vue-router';
+import { useClientStorage } from '../composable/useClientStorage';
+import { useCookies } from 'vue3-cookies';
 
+    const router = useRouter()
     const authStores = useAuthStore();
     const clientInputRef = ref<HTMLInputElement | null>(null);
     const passwordInputRef = ref<HTMLInputElement | null>(null);
     const statusExceptionMessage = ref<boolean>(false) 
     const exceptionMessage = ref<string>("");
+    const { clearClient } = useClientStorage()
+
+    clearClient();
 
     const myForm = reactive({
         username: "",
@@ -85,6 +92,11 @@ import { useAuthStore } from '../stores/auth.store';
             statusExceptionMessage.value = true
         }
         
+        if(authStores.isAuthenticated) {
+            router.replace({
+                name: "menu"
+            })
+        }
     }
 
     
