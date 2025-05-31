@@ -36,7 +36,7 @@ const props = defineProps<{
 const emit = defineEmits(['confirm', 'cancel']);
 
 const deleteInfo = () => {
-    emit('confirm', props.data);
+    emit('confirm', "como hago");
 }
 
 const cancelAction = () => {

@@ -54,11 +54,25 @@ const router = createRouter({
           beforeEnter: isAuthenticatedGuard
         },
         {
-          path: 'createClient',
+          path: 'create_client',
           name: 'createClient',
           component: () => import("../module/client/view/CreateClient.vue"),
           beforeEnter: isAuthenticatedGuard
+        },
+        {
+          path: 'delete_client',
+          name: 'deleteClient',
+          component: () => import("../module/client/view/DeleteClient.vue"),
+          props: true,
+          beforeEnter: isAuthenticatedGuard
+        },
+        {
+          path: 'update_client',
+          name: 'updateClient',
+          component: () => import("../module/client/view/UpdateClient.vue"),
+          beforeEnter: isAuthenticatedGuard
         }
+
       ],
     },
     {

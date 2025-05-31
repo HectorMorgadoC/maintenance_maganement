@@ -105,7 +105,7 @@
 </template>
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
-import ActionPanel from './ActionPanel.vue';
+import ActionPanel from '../module/common/components/ActionPanel.vue';
 
 interface Producto {
     name: string,

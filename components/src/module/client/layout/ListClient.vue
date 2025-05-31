@@ -8,17 +8,17 @@
     class="text-3xl text-[#EEE0D3] p-3 mt-4 font-semibold "
     >Ver clientes</button>
     </div>
-    <CardInfo v-else :data_list=listClient />
+    <CardInfoClient v-else :data_list=listClient title="username" />
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 import ButtonCreate from "../../common/components/ButtonCreate.vue"
-import CardInfo from '../../../components/CardInfo.vue';
 import type { Client } from "../../auth/interfaces/client.interface";
 import { getClient } from "../action/getClient.action";
 import { useToast } from "vue-toastification";
 import router from "../../../router";
+import CardInfoClient from "../view/CardInfoClient.vue";
 
 
 const statusCard = ref<boolean>(false);

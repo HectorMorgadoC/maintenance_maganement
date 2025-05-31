@@ -18,7 +18,7 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-import DeleteItem from './DeleteItem.vue';
+import DeleteItem from '../module/common/components/DeleteItem.vue';
 
 
 const props = defineProps<{

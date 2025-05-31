@@ -16,17 +16,25 @@
     </div>
     <div v-else>
         <ActionPanel 
-            title="sdfsdfd" 
-            :data="selectedItem" />
+            :title="selectedItem.username" 
+            :data="selectedItem"
+            router_delete="deleteClient"
+            router_update="updateClient"
+            />
     </div>
     
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-import ActionPanel from '../module/common/components/ActionPanel.vue';
+import ActionPanel from '../../common/components/ActionPanel.vue';
+import type { Client } from '../../auth/interfaces/client.interface';
+import { useClientItemStore } from '../stores/client.store';
+
+
+const clientstore = useClientItemStore()
 
 const props = defineProps<{
-    data_list: any[]
+    data_list: Client[]
 }>()
 
 
@@ -37,7 +45,8 @@ const isEditMode = ref<Boolean>(false);
 const selectItem = (item: any) => {
     selectedItem.value = item;
     isEditMode.value = true
-
+    clientstore.setClientItem(item)
+    console.log(clientstore.clientItem)
 }
 
 </script>
