@@ -19,7 +19,6 @@ export function useClientStorage() {
     const loadClient = () => {
         try {
             const raw = localStorage.getItem(CLIENT_STORAGE_KEY);
-            console.log( raw )
             client.value = raw ? JSON.parse(raw) as Client : null;
         } catch (err) {
             console.error('Error al leer localStorage:', err);

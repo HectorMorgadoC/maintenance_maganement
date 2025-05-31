@@ -4,9 +4,7 @@
             <p class="text-[#EEE0D3] text-3xl lg:ml-20">{{ title }}</p>
         </div>
         <div class="bg-[#FC3B47] text-[#EEE0D3] text-xl py-4 px-5 lg:mr-20 font-semibold hover:bg-[#F2564F] transition">
-            <a :href="patch">
-                {{ titleButton }}
-            </a>
+            <RouterLink :to="{name: patch}">{{ titleButton }}</RouterLink>
         </div>
     </div>
     

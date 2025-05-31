@@ -86,7 +86,7 @@
         <div v-else>
             <DataConfirmation 
             title="Desea realizar registro" 
-            :data="myForm"
+            :sample_data="myForm"
             @on-registration-status="cancelRegisterInfo"
             />
         </div>
@@ -95,7 +95,7 @@
 </template>
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
-import DataConfirmation from './DataConfirmation.vue';
+import DataConfirmation from '../module/common/components/DataConfirmation.vue';
 
 
 const myForm = reactive({

@@ -4,7 +4,7 @@
             <h3 class="block text-3xl font-medium text-[#F3ECDE] mx-5 my-2 pb-3">{{ props.title }}</h3>
             
             <div class="w-full text-2xl text-[#F3ECDE] mb-6 mx-5">
-                <p v-for="[key, value] in Object.entries(data)" :key="key" class="my-2 pl-2 text-justify">
+                <p v-for="[key, value] in Object.entries(sample_data)" :key="key" class="my-2 pl-2 text-justify">
                     {{ key }}: {{ value }}
                 </p>
             </div>
@@ -29,22 +29,25 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import type { CreateClient } from '../../client/interface/createClient';
 
 const props = defineProps<{
     title: string,
+    sample_data: Record<string, any>
     data: Record<string, any>
 }>()
 
-const issuDenialStatus = defineEmits(["onRegistrationStatus"])
+const issueStatus = defineEmits(["offRegistrationStatus","onRegistrationStatus"])
+const newCLient = props.data;
 
 const onStatus = ref<Boolean>(false)
 
 const RegisterInfo = () => {
-    console.log(props.data)
+    issueStatus("onRegistrationStatus",newCLient)
 }
 
 const cancelAction = () => {
     onStatus.value = true
-    issuDenialStatus("onRegistrationStatus",false)
+    issueStatus("offRegistrationStatus",false)
 }
 </script>

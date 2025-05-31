@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import ButtonCreate from './ButtonCreate.vue';
+import ButtonCreate from '../module/common/components/ButtonCreate.vue';
 import CardInfo from './CardInfo.vue';
 
 const userOne = [

@@ -3,6 +3,8 @@ import { managementApi } from '../../../api/managementApi';
 import type { AuthResponse } from '../interfaces/auth.response';
 import type { Client } from '../interfaces/client.interface';
 import { useCookies } from 'vue3-cookies';
+import router from '../../../router';
+import { useToast } from 'vue-toastification';
 
 interface CheckError {
   ok: false;
@@ -31,9 +33,14 @@ export const checkAuthAction = async (): Promise<CheckError | CheckSuccess> => {
     };
   } catch (error) {
     if (isAxiosError(error) && error.response?.status === 401) {
+      const toast = useToast()
+      toast.error("No autorizado")
+      router.replace({ name: 'login' });
       return {
         ok: false,
       };
+    } else {
+      router.replace({ name: 'ServerError' });
     }
 
     throw new Error('The session could not be verified');

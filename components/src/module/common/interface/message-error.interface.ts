@@ -1,5 +1,5 @@
 export interface MessageError {
-    message:string | string[],
+    message:string[] | string,
     error: string,
     statusCode: number
 }
