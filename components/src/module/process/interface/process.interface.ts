@@ -1,4 +1,4 @@
-import { UUIDTypes } from "uuid"
+import type { UUIDTypes } from "uuid"
 
 export interface Process {
     id: UUIDTypes

@@ -32,7 +32,7 @@ const router = createRouter({
         {
           path: 'process',
           name: 'process',
-          component: () => import("../module/client/layout/ListClient.vue"),
+          component: () => import("../module/process/layout/ListProcess.vue"),
           beforeEnter: isAuthenticatedGuard
         },
         {
@@ -70,6 +70,25 @@ const router = createRouter({
           path: 'update_client',
           name: 'updateClient',
           component: () => import("../module/client/view/UpdateClient.vue"),
+          beforeEnter: isAuthenticatedGuard
+        },
+        {
+          path: 'create_process',
+          name: 'createProcess',
+          component: () => import("../module/process/view//CreateProcess.vue"),
+          beforeEnter: isAuthenticatedGuard
+        },
+        {
+          path: 'delete_process',
+          name: 'deleteProcess',
+          component: () => import("../module/process/view/DeleteProcess.vue"),
+          props: true,
+          beforeEnter: isAuthenticatedGuard
+        },
+        {
+          path: 'update_process',
+          name: 'updateProcess',
+          component: () => import("../module/process/view/UpdateProcess.vue"),
           beforeEnter: isAuthenticatedGuard
         }
 

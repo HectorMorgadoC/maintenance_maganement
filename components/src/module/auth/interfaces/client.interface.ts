@@ -1,4 +1,4 @@
-import type { Process } from "../../common/interface/process.interface";
+import type { Process } from "../../process/interface/process.interface";
 import type { Team } from "../../common/interface/team.interface";
 import { AccessLevel } from "./access-level.enum";
 
