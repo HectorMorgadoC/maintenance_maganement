@@ -7,3 +7,4 @@ export interface CreateClient {
     access_level: AccessLevel,
     password: string,
 }
+

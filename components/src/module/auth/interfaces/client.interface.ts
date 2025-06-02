@@ -7,5 +7,6 @@ export interface Client {
     username: string,
     access_level: AccessLevel,
     teams?: Team[],
-    process?: Process[]
+    process?: Process[],
+    email?: string
 }

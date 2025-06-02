@@ -10,12 +10,14 @@
             </div>
 
             <div class="flex justify-center gap-4">
-                <button 
+                <button
+                @click="deleteClientForId"
                     class="w-full max-w-md bg-[#FC3B47] text-xl text-[#EEE0D3] p-4 m-5 font-semibold hover:bg-[#F2564F] transition"
                 >
                     Sí
                 </button>
-                <button 
+                <button
+                    @click="denyClientDeletion"
                     class="w-full max-w-md bg-[#FC3B47] text-xl text-[#EEE0D3] p-4 m-5 font-semibold hover:bg-[#F2564F] transition"
                 >
                     No
@@ -26,12 +28,52 @@
 </template>
 
 <script setup lang="ts">
+import type { UUIDTypes } from 'uuid';
+import { deleteClient } from '../action/deleteClient.action';
 import { useClientItemStore } from '../stores/client.store';
+import router from '../../../router';
+import { useToast } from 'vue-toastification';
 
 
 const clientStore = useClientItemStore()
+const clientId = clientStore.clientItem.id
+const toast = useToast()
 
-console.log(clientStore.clientItem)
 
+const deleteClientForId = async() => {
+    try {
+        const response = await deleteClient(clientId as UUIDTypes);
+
+        if("code" in response) {
+            if(response.code === 200) {
+                toast.success("Client successfully eliminated")
+                router.replace({name: "menu"})
+            }
+        } else {
+            if(response.statusCode === 404 ) {
+                router.replace({ name: 'NotFound' });
+            }
+                
+            if(response.statusCode === 400 ) {
+                toast.warning(`Bad request ${response.message}`)
+            }
+                
+            if(response.statusCode === 403 || response.statusCode === 401) {
+                toast.error("Not authorized")
+                router.replace({ name: 'login' });
+            }
+
+            if(response.statusCode === 0 || response.statusCode === 500) {
+                router.replace({ name: 'ServerError' });
+            }
+        }
+    } catch (err) {
+        toast.error("Request error")
+    }
+}
+
+const denyClientDeletion = () => {
+    router.replace({name: "client"})
+}
 
 </script>
