@@ -38,13 +38,13 @@ const router = createRouter({
         {
           path: 'teams',
           name: 'team',
-          component: () => import("../module/client/layout/ListClient.vue"),
+          component: () => import("../module/team/layout/ListTeam.vue"),
           beforeEnter: isAuthenticatedGuard
         },
         {
           path: 'orders',
           name: 'order',
-          component: () => import("../module/client/layout/ListClient.vue"),
+          component: () => import("../module/order/layout/OrdersSearch.vue"),
           beforeEnter: isAuthenticatedGuard
         },
         {
@@ -89,6 +89,44 @@ const router = createRouter({
           path: 'update_process',
           name: 'updateProcess',
           component: () => import("../module/process/view/UpdateProcess.vue"),
+          beforeEnter: isAuthenticatedGuard
+        },
+        {
+          path: 'create_team',
+          name: 'createTeam',
+          component: () => import("../module/team/view//CreateTeam.vue"),
+          beforeEnter: isAuthenticatedGuard
+        },
+        {
+          path: 'delete_team',
+          name: 'deleteTeam',
+          component: () => import("../module/team/view/DeleteTeam.vue"),
+          props: true,
+          beforeEnter: isAuthenticatedGuard
+        },
+        {
+          path: 'update_team',
+          name: 'updateTeam',
+          component: () => import("../module/team/view/UpdateTeam.vue"),
+          beforeEnter: isAuthenticatedGuard
+        },
+        {
+          path: 'create_order',
+          name: 'createOrder',
+          component: () => import("../module/order/view//CreateOrder.vue"),
+          beforeEnter: isAuthenticatedGuard
+        },
+        {
+          path: 'delete_order',
+          name: 'deleteOrder',
+          component: () => import("../module/order/view/DeleteOrder.vue"),
+          props: true,
+          beforeEnter: isAuthenticatedGuard
+        },
+        {
+          path: 'update_order',
+          name: 'updateOrder',
+          component: () => import("../module/order/view/UpdateOrder.vue"),
           beforeEnter: isAuthenticatedGuard
         }
 

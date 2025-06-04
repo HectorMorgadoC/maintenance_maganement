@@ -1,8 +1,8 @@
 import type { UUIDTypes } from "uuid"
 
 export interface Process {
-    id: UUIDTypes
+    id?: UUIDTypes
     name: string,
     description: string
-    status: boolean
+    is_actived?: boolean
 }

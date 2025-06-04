@@ -26,6 +26,15 @@ export function useClientStorage() {
         }
     };
 
+    const updateClient = (updates: Partial<Client>) => {
+        if (client.value) {
+            client.value = { ...client.value, ...updates };
+            localStorage.setItem(CLIENT_STORAGE_KEY, JSON.stringify(client.value));
+        } else {
+            console.warn('No hay un cliente cargado para actualizar.');
+        }
+    };
+
     const clearClient = () => {
         localStorage.removeItem(CLIENT_STORAGE_KEY);
         client.value = null;
@@ -38,6 +47,7 @@ export function useClientStorage() {
         client,       
         saveClient,
         loadClient,
+        updateClient,
         clearClient,
     };
 }

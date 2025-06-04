@@ -1,25 +1,34 @@
 import { managementApi } from "../../../api/managementApi";
+import type { Client } from "../../auth/interfaces/client.interface";
 import { useAuthStore } from "../../auth/stores/auth.store";
 import type { MessageError } from "../../common/interface/message-error.interface";
 import { isAxiosError } from "axios";
-import type { CreateProcess } from "../interface/createProcess.interface";
-import type { Process } from "../interface/process.interface";
+import type { UpdateClient } from "../interface/updateClient";
+import type { UUIDTypes } from "uuid";
 
-export const registerProcess = async (newProcess: CreateProcess): 
-Promise< MessageError | Process > => {
+export const updateClient = async (updatedClient: UpdateClient,idClient: UUIDTypes): 
+Promise< MessageError | Client > => {
     const client = useAuthStore();
 
     if(client.client?.access_level === "admin") {
-        try {
-            
-            let response = await managementApi.post<Process>('/process',{
-                name: newProcess.name,
-                description: newProcess.description,
-                is_actived: newProcess.is_actived
-            });
 
-            let process: Process = response.data
-            return process
+    const body: any = {
+        username: updatedClient.username,
+        email: updatedClient.email,
+        access_level: updatedClient.access_level,
+        process: updatedClient.process
+    };
+
+    if (updatedClient.password.length > 0) {
+        body.password = updatedClient.password;
+    }
+
+        try {
+            console.log(body)
+            let response = await managementApi.patch<Client>(`/client/${idClient}`,body);
+
+            let client: Client = response.data
+            return client
 
         } catch (error) {
             return {

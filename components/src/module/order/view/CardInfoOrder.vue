@@ -18,8 +18,8 @@
         <ActionPanel 
             :title="selectedItem.username" 
             :data="selectedItem"
-            router_delete="deleteClient"
-            router_update="updateClient"
+            router_delete="deleteOrder"
+            router_update="updateOrder"
             :state_router_delete=false
             />
     </div>
@@ -28,14 +28,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import ActionPanel from '../../common/components/ActionPanel.vue';
-import type { Client } from '../../auth/interfaces/client.interface';
 import { useClientItemStore } from '../stores/client.store';
+import type { Order } from '../interface/orders.interface';
 
 
 const clientstore = useClientItemStore()
 
 const props = defineProps<{
-    data_list: Client[]
+    data_list: Order[]
 }>()
 
 

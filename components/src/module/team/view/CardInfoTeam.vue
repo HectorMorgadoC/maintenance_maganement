@@ -16,11 +16,11 @@
     </div>
     <div v-else>
         <ActionPanel 
-            :title="selectedItem.username" 
+            :title="selectedItem.name" 
             :data="selectedItem"
-            router_delete="deleteClient"
-            router_update="updateClient"
-            :state_router_delete=false
+            router_delete="deleteTeam"
+            router_update="updateTeam"
+            :state_router_delete=true
             />
     </div>
     
@@ -28,14 +28,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import ActionPanel from '../../common/components/ActionPanel.vue';
-import type { Client } from '../../auth/interfaces/client.interface';
-import { useClientItemStore } from '../stores/client.store';
+import { useTeamItemStore } from '../stores/team.store';
+import type { Team } from '../interface/team.interface';
 
 
-const clientstore = useClientItemStore()
+const teamStore = useTeamItemStore()
 
 const props = defineProps<{
-    data_list: Client[]
+    data_list: Team[]
 }>()
 
 
@@ -46,7 +46,7 @@ const isEditMode = ref<Boolean>(false);
 const selectItem = (item: any) => {
     selectedItem.value = item;
     isEditMode.value = true
-    clientstore.setClientItem(item)
+    teamStore.setTeamItem(item)
 }
 
 </script>

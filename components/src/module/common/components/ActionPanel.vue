@@ -7,6 +7,7 @@
                     @click="routeUpdate"
                     class="w-full max-w-md bg-[#FC3B47] text-xl text-[#EEE0D3] p-4 m-5 font-semibold hover:bg-[#F2564F] transition"> Modificar </button>
                 <button 
+                    v-if="!state_router_delete"
                     @click="routeDelete"
                     class="w-full max-w-md bg-[#FC3B47] text-xl text-[#EEE0D3] p-4 m-5 font-semibold hover:bg-[#F2564F] transition">Eliminar</button>
             </div>
@@ -22,6 +23,7 @@ const props = defineProps<{
     data:{}
     router_update: string
     router_delete: string
+    state_router_delete: boolean
 }>()
 
 let isEditMode = ref<Boolean>(false);

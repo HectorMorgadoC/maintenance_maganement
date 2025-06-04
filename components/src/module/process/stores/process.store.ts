@@ -1,21 +1,20 @@
 import { defineStore } from "pinia";
-import type { Client } from "../../auth/interfaces/client.interface";
-import { AccessLevel } from "../../auth/interfaces/access-level.enum";
 import { ref } from "vue";
+import type { Process } from "../interface/process.interface";
 
-export const useClientItemStore = defineStore('client', () => {
+export const useProcessItemStore = defineStore('process', () => {
 
-    let clientItem = ref<Client>({
-        username: "",
-        access_level: AccessLevel.operator
+    let processItem = ref<Process>({
+        name: "",
+        description: "",
     })
 
-    const setClientItem = (client: Client) => {
-        clientItem.value = client;
+    const setProcessItem = (process: Process) => {
+        processItem.value = process;
     } 
 
     return {
-        clientItem,
-        setClientItem
+        processItem: processItem,
+        setProcessItem
     }
 })

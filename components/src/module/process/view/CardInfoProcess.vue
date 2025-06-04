@@ -16,10 +16,11 @@
     </div>
     <div v-else>
         <ActionPanel 
-            :title="selectedItem.username" 
+            :title="selectedItem.name" 
             :data="selectedItem"
-            router_delete="deleteClient"
-            router_update="updateClient"
+            router_delete="deleteProcess"
+            router_update="updateProcess"
+            :state_router_delete=true
             />
     </div>
     
@@ -27,11 +28,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import ActionPanel from '../../common/components/ActionPanel.vue';
-import { useClientItemStore } from '../stores/process.store';
+import { useProcessItemStore } from '../stores/process.store';
 import type { Process } from '../interface/process.interface';
 
 
-const clientstore = useClientItemStore()
+const processStore = useProcessItemStore()
 
 const props = defineProps<{
     data_list: Process[]
@@ -45,7 +46,7 @@ const isEditMode = ref<Boolean>(false);
 const selectItem = (item: any) => {
     selectedItem.value = item;
     isEditMode.value = true
-    clientstore.setClientItem(item)
+    processStore.setProcessItem(item)
 }
 
 </script>

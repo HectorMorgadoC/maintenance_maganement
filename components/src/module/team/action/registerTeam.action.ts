@@ -4,22 +4,28 @@ import type { MessageError } from "../../common/interface/message-error.interfac
 import { isAxiosError } from "axios";
 import type { CreateProcess } from "../interface/createProcess.interface";
 import type { Process } from "../interface/process.interface";
+import type { CreateTeam } from "../interface/createTeam.interface";
+import type { Team } from "../interface/team.interface";
 
-export const registerProcess = async (newProcess: CreateProcess): 
-Promise< MessageError | Process > => {
+export const registerTeam = async (newTeam: CreateTeam): 
+Promise< MessageError | Team > => {
     const client = useAuthStore();
 
     if(client.client?.access_level === "admin") {
         try {
             
-            let response = await managementApi.post<Process>('/process',{
-                name: newProcess.name,
-                description: newProcess.description,
-                is_actived: newProcess.is_actived
+            let response = await managementApi.post<Team>('/team',{
+                name: newTeam.name,
+                description: newTeam.description,
+                march: newTeam.march,
+                model: newTeam.model,
+                working_voltage: newTeam.working_voltage,
+                kilowatts: newTeam.kilowatts,
+                process: newTeam.process
             });
 
-            let process: Process = response.data
-            return process
+            let team: Team = response.data
+            return team
 
         } catch (error) {
             return {

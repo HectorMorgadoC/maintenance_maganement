@@ -1,25 +1,27 @@
 import { managementApi } from "../../../api/managementApi";
+import type { Client } from "../../auth/interfaces/client.interface";
 import { useAuthStore } from "../../auth/stores/auth.store";
 import type { MessageError } from "../../common/interface/message-error.interface";
 import { isAxiosError } from "axios";
-import type { CreateProcess } from "../interface/createProcess.interface";
-import type { Process } from "../interface/process.interface";
+import type { CreateClient } from "../interface/createClient";
 
-export const registerProcess = async (newProcess: CreateProcess): 
-Promise< MessageError | Process > => {
+export const registerClient = async (newCliente: CreateClient): 
+Promise< MessageError | Client[] > => {
     const client = useAuthStore();
 
     if(client.client?.access_level === "admin") {
         try {
             
-            let response = await managementApi.post<Process>('/process',{
-                name: newProcess.name,
-                description: newProcess.description,
-                is_actived: newProcess.is_actived
+            let response = await managementApi.post<Client[]>('/client',{
+                username : newCliente.username,
+                email: newCliente.email,
+                password: newCliente.password,
+                access_level: newCliente.access_level,
+                process: newCliente.process
             });
 
-            let process: Process = response.data
-            return process
+            let clients: Client[] = response.data
+            return clients
 
         } catch (error) {
             return {

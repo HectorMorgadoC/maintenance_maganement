@@ -29,11 +29,11 @@
 
 <script setup lang="ts">
 import type { UUIDTypes } from 'uuid';
-import { deleteProcess } from '../action/deleteProcess.action';
-import { useProcessItemStore } from '../stores/process.store';
+import { deleteProcess } from '../action/deleteTeam.action';
+import { useProcessItemStore } from '../stores/team.store';
 import router from '../../../router';
 import { useToast } from 'vue-toastification';
-import { updateListProcess } from '../action/updateListProcess';
+import { updateListProcess } from '../action/updateListTeam';
 
 
 const processStore = useProcessItemStore()

@@ -3,21 +3,21 @@
         <form v-if="!onStatus" @submit.prevent="registerInfo" class="w-full max-w-md bg-[#3d3b46] p-6 sm:p-8 md:p-10 shadow-md">
             <h3 
             class="mb-5 block text-4xl text-center font-extrabolt text-[#EEE0D3] mb-1"
-            >Registrar cliente</h3>
+            >Registrar proceso</h3>
             <div class="mb-3">
                 <label 
                     for="client" 
                     class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
-                    Nombre de usuario
+                    Nombre del Proceso
                 </label>
                 <input
-                    v-model="username"
+                    v-model="name"
                     type="text"
-                    id="username"
-                    name="username"
+                    id="name"
+                    name="name"
                     required
-                    placeholder="Ingrese nombre mayor a 5 caracteres"
+                    placeholder="Ingrese nombre del proceso"
                     class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 />
             </div>
@@ -27,79 +27,15 @@
                     for="lastname" 
                     class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
-                    Email
+                    Descripcion del proceso
                 </label>
                 <input
-                    v-model="email"
-                    type="email"
-                    id="email"
-                    name="email"
+                    v-model="description"
+                    type="descrition"
+                    id="descrition"
+                    name="descrition"
                     required
-                    placeholder="Ingrese un email vigente"
-                    class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
-                />
-            </div>
-
-            <div class="mb-3">
-                <label 
-                    for="city" 
-                    class="block text-xl font-medium text-[#EEE0D3] my-2"
-                >
-                    Nivel de acceso
-                </label>
-                <select
-                v-model="access_level"
-                name="access_level" 
-                id="access_level"
-                class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
-                >
-                    <option disabled value="">Seleccione un nivel de acceso</option>
-                    <option :value=accessLevel.operator>Operador</option>
-                    <option :value=accessLevel.production_supervisor>Supervisor de produccion</option>
-                    <option :value=accessLevel.technical>Tecnico</option>
-                    <option :value=accessLevel.technical_supervisor>Supervisor </option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label 
-                    for="city" 
-                    class="block text-xl font-medium text-[#EEE0D3] my-2"
-                >
-                    Proceso
-                </label>
-                <select
-                v-model="process"
-                name="process" 
-                id="process"
-                class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
-                >
-                    <option disabled value="">Seleccione un processo</option>
-                    <option 
-                    v-for="(process, index) in listProcess"
-                    :key="index"
-                    :value="process.id"
-                    >
-                        {{ process.name }}</option>
-                    
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label 
-                    for="password" 
-                    class="block text-xl font-medium text-[#EEE0D3] my-2"
-                >
-                    Contraseña
-                </label>
-                <input
-                    v-model="password"
-                    type="password"
-                    id="password"
-                    name="password"
-                    required
-                    placeholder="Debe tener mayúscula, minúscula, número, mayor a 6 caracteres.
-"
+                    placeholder="Ingrese su descripcion"
                     class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 />
             </div>
@@ -116,14 +52,10 @@
             <DataConfirmation 
             title="Desea realizar registro" 
             :sample_data="{
-                Usuario: newClient.username,
-                Email: newClient.email,
-                Process: listProcess?.find(( p ) => {
-                    return p.id === newClient.process
-                })?.name,
-                Acesso: newClient.access_level
+                Name: newProcess.name,
+                Description: newProcess.description,
                 }"
-            :data="newClient"
+            :data="newProcess"
             @off-registration-status="cancelRegisterInfo"
             @on-registration-status="onRegister"
             />
@@ -134,86 +66,57 @@
 <script setup lang="ts">
     import { ref } from 'vue';
     import DataConfirmation from '../../common/components/DataConfirmation.vue';
-    import type { CreateClient } from '../interface/createClient';
-    import { AccessLevel } from '../../auth/interfaces/access-level.enum';
-    import { useAuthStore } from '../../auth/stores/auth.store';
     import { useField, useForm } from 'vee-validate';
     import * as yup from 'yup'
     import { useToast } from 'vue-toastification';
-    import { registerClient } from '../action/registerProcess.action';
+    import { registerProcess } from '../action/registerProcess.action';
     import router from '../../../router';
+    import type { CreateProcess } from '../interface/createProcess.interface';
+import { updateListProcess } from '../action/updateListProcess';
 
-    const listProcess = useAuthStore().client?.process;
     const toast = useToast();
 
     const schema = yup.object({
-        username: yup.string().required('Campo requerido')
-        .min(5, 'Mínimo 5 caracteres')
-        .max(30,'Maximo 30 caracteres')
+        name: yup.string().required('Campo requerido')
+        .max(50,'Maximo 50 caracteres')
         ,
-        email: yup.string().required('Campo requerido').email('Email inválido'),
-        password: yup
-            .string()
-            .required('Campo requerido')
-            .min(6, 'Mínimo 6 caracteres')
-            .max(50,'Maximo 50 caracteres')
-            .matches(/[a-z]/, 'Debe tener una minúscula')
-            .matches(/[A-Z]/, 'Debe tener una mayúscula')
-            .matches(/[0-9]/, 'Debe tener un número'),
-        access_level: yup.string().required('Seleccione un nivel de acceso'),
-        process: yup.string().required('Seleccione un proceso')
+        description: yup.string().required('Campo requerido')
+        .max(200,'Maximo 200 caracteres')
     })
 
     const { errors,values,resetForm } = useForm({
         validationSchema: schema,
         initialValues: {
-        username: "",
-        email: "",
-        password: "",
-        access_level: "",
-        process: ""
+        name: "",
+        description: "",
+        is_actived: false,
         }
     })
 
-    let newClient = ref<CreateClient>({
-        username : "",
-        email: "",
-        password: "",
-        access_level: AccessLevel.operator,
-        process: ""
+    let newProcess = ref<CreateProcess>({
+        name: "",
+        description: "",
     })
 
-    const { value: username } = useField<string>('username')
-    const { value: email } = useField<string>('email')
-    const { value: password } = useField<string>('password')
-    const { value: access_level } = useField<AccessLevel>('access_level')
-    const { value: process } = useField<string>('process')
-    
-    const accessLevel = AccessLevel;
+    const { value: name} = useField<string>('name')
+    const { value: description } = useField<string>('description')
     
     const onStatus = ref<boolean>(false)
     
     const registerInfo = () => {
     
-        newClient.value = {
-            username : values.username,
-            email: values.email,
-            password: values.password,
-            access_level: values.access_level as AccessLevel,
-            process: values.process
+        newProcess.value = {
+            name : values.name,
+            description: values.description,
         }
 
         if(errors) {
-            if("username" in errors.value) {
-                toast.warning(`Usuario: ${errors.value.username}`)
+            if("name" in errors.value) {
+                toast.warning(`Name: ${errors.value.name}`)
             }
         
-            if("email" in errors.value) {
-                toast.warning(`email: ${errors.value.email}`)
-            }
-        
-            if("password" in errors.value) {
-                toast.warning(`Contraseña: ${errors.value.password}`)
+            if("description" in errors.value) {
+                toast.warning(`Description: ${errors.value.description}`)
             }
             onStatus.value = false
         } 
@@ -221,10 +124,10 @@
         onStatus.value = true
     }
     
-    const onRegister = async (newCLient: CreateClient) => {
+    const onRegister = async (newProcess: CreateProcess) => {
             
         try {
-            const response = await registerClient(newCLient);
+            const response = await registerProcess(newProcess);
             if (response) {
             
                 if ("statusCode" in response) {
@@ -247,7 +150,8 @@
                 
                 }
 
-                if("username" in response) {
+                if("name" in response) {
+                    await updateListProcess()
                     toast.info("New registered customer")
                     resetForm()
                     onStatus.value = false

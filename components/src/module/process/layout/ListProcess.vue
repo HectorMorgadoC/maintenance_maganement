@@ -15,6 +15,7 @@ import type { Process } from "../interface/process.interface";
 const clientStore = useClientStorage();
 const listProcess = ref<Process[]>([]);
 listProcess.value = clientStore.client.value?.process || []
+console.log(listProcess.value)
 
 
 

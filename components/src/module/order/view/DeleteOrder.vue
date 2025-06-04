@@ -1,23 +1,23 @@
 <template>
     <div class="fixed inset-0 flex items-center justify-center">
         <div class="w-11/12 max-w-md bg-[#3d3b46] p-6 ">
-            <h3 class="text-3xl font-medium text-[#F3ECDE] my-4 pb-2 text-center">{{ processStore.processItem.name }}</h3>
+            <h3 class="text-3xl font-medium text-[#F3ECDE] my-4 pb-2 text-center">{{ clientStore.clientItem.username }}</h3>
             
             <div class="w-full text-[#EEE0D3] text-justify text-2xl mb-6">
-                <p v-for="[key, value] in Object.entries(processStore.processItem)" :key="key" class="my-2 px-8">
+                <p v-for="[key, value] in Object.entries(clientStore.clientItem)" :key="key" class="my-2 px-8">
                     {{ key }}: {{ value }}
                 </p>
             </div>
 
             <div class="flex justify-center gap-4">
                 <button
-                @click="deleteProcessForId"
+                @click="deleteClientForId"
                     class="w-full max-w-md bg-[#FC3B47] text-xl text-[#EEE0D3] p-4 m-5 font-semibold hover:bg-[#F2564F] transition"
                 >
                     Sí
                 </button>
                 <button
-                    @click="denyProcessDeletion"
+                    @click="denyClientDeletion"
                     class="w-full max-w-md bg-[#FC3B47] text-xl text-[#EEE0D3] p-4 m-5 font-semibold hover:bg-[#F2564F] transition"
                 >
                     No
@@ -29,26 +29,24 @@
 
 <script setup lang="ts">
 import type { UUIDTypes } from 'uuid';
-import { deleteProcess } from '../action/deleteProcess.action';
-import { useProcessItemStore } from '../stores/process.store';
+import { deleteClient } from '../action/deleteClient.action';
+import { useClientItemStore } from '../stores/client.store';
 import router from '../../../router';
 import { useToast } from 'vue-toastification';
-import { updateListProcess } from '../action/updateListProcess';
 
 
-const processStore = useProcessItemStore()
-const processId = processStore.processItem.id
+const clientStore = useClientItemStore()
+const clientId = clientStore.clientItem.id
 const toast = useToast()
 
 
-const deleteProcessForId = async() => {
+const deleteClientForId = async() => {
     try {
-        const response = await deleteProcess(processId as UUIDTypes);
+        const response = await deleteClient(clientId as UUIDTypes);
 
         if("code" in response) {
             if(response.code === 200) {
-                await updateListProcess();
-                toast.success("Process successfully eliminated")
+                toast.success("Client successfully eliminated")
                 router.replace({name: "menu"})
             }
         } else {
@@ -74,8 +72,8 @@ const deleteProcessForId = async() => {
     }
 }
 
-const denyProcessDeletion = () => {
-    router.replace({name: "process"})
+const denyClientDeletion = () => {
+    router.replace({name: "client"})
 }
 
 </script>
