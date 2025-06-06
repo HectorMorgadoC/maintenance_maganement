@@ -120,9 +120,9 @@
 import { reactive, ref } from 'vue';
 import { useClientStorage } from '../../auth/composable/useClientStorage';
 import type { Team } from '../../team/interface/team.interface';
-import CardInfoOrder from '../view/CardInfoOrder.vue';
+import CardInfoOrder from '../view/CardInfoReport.vue';
 import type{ Order } from '../interface/orders.interface';
-import { getOrderFilters } from '../action/getOrdersFilter.action';
+import { getOrderFilters } from '../action/getReportFilter.action';
 import router from '../../../router';
 import { useToast } from 'vue-toastification';
 import ButtonCreate from '../../common/components/ButtonCreate.vue';

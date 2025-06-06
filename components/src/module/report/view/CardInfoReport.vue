@@ -29,7 +29,7 @@
 import { ref } from 'vue';
 import ActionPanel from '../../common/components/ActionPanel.vue';
 import type { Order } from '../interface/orders.interface';
-import { useOrderItemStore } from '../stores/order.store';
+import { useOrderItemStore } from '../stores/report.store';
 import { useClientStorage } from '../../auth/composable/useClientStorage';
 import { AccessLevel } from '../../auth/interfaces/access-level.enum';
 import { useToast } from 'vue-toastification';

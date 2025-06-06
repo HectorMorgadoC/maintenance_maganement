@@ -31,8 +31,8 @@
 import type { UUIDTypes } from 'uuid';
 import router from '../../../router';
 import { useToast } from 'vue-toastification';
-import { useOrderItemStore } from '../stores/order.store';
-import { deleteOrder } from '../action/deleteOrder.action';
+import { useOrderItemStore } from '../stores/report.store';
+import { deleteOrder } from '../action/deleteReport.action';
 
 
 const orderStore = useOrderItemStore()

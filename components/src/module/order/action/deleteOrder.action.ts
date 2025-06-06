@@ -4,18 +4,20 @@ import type { MessageError } from "../../common/interface/message-error.interfac
 import { isAxiosError } from "axios";
 import type { UUIDTypes } from "uuid";
 import type { StatusCode } from "../../common/interface/status-code.interface";
-import type { Process } from "../interface/process.interface";
+import type { Order } from "../interface/orders.interface";
 import { AccessLevel } from "../../auth/interfaces/access-level.enum";
 
-export const deleteProcess = async (process_id: UUIDTypes): 
+export const deleteOrder = async (order_id: UUIDTypes): 
 
 Promise< MessageError | StatusCode > => {
     const client = useAuthStore();
 
-    if(client.client?.access_level === AccessLevel.admin) {
+    if(client.client?.access_level === AccessLevel.production_supervisor || 
+            client.client?.access_level === AccessLevel.technical_supervisor ||
+            client.client?.access_level === AccessLevel.admin) {
         try {
             
-            let response = await managementApi.delete<Process>(`/process/${process_id}`);
+            let response = await managementApi.delete<Order[]>(`/order/${order_id}`);
 
             let statusCode: StatusCode = { 
                 code: response.status

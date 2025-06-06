@@ -4,12 +4,13 @@ import type { MessageError } from "../../common/interface/message-error.interfac
 import { isAxiosError } from "axios";
 import type { CreateProcess } from "../interface/createProcess.interface";
 import type { Process } from "../interface/process.interface";
+import { AccessLevel } from "../../auth/interfaces/access-level.enum";
 
 export const registerProcess = async (newProcess: CreateProcess): 
 Promise< MessageError | Process > => {
     const client = useAuthStore();
 
-    if(client.client?.access_level === "admin") {
+    if(client.client?.access_level === AccessLevel.admin) {
         try {
             
             let response = await managementApi.post<Process>('/process',{

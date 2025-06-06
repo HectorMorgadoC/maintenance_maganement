@@ -5,13 +5,14 @@ import type { MessageError } from "../../common/interface/message-error.interfac
 import { isAxiosError } from "axios";
 import type { UUIDTypes } from "uuid";
 import type { StatusCode } from "../../common/interface/status-code.interface";
+import { AccessLevel } from "../../auth/interfaces/access-level.enum";
 
 export const deleteClient = async (client_id: UUIDTypes): 
 
 Promise< MessageError | StatusCode > => {
     const client = useAuthStore();
 
-    if(client.client?.access_level === "admin") {
+    if(client.client?.access_level === AccessLevel.admin) {
         try {
             
             let response = await managementApi.delete<Client[]>(`/client/${client_id}`);

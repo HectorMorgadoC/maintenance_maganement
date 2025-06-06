@@ -5,12 +5,13 @@ import { isAxiosError } from "axios";
 import type { UUIDTypes } from "uuid";
 import type { UpdateTeam } from "../interface/updateTeam.interface";
 import type { Team } from "../interface/team.interface";
+import { AccessLevel } from "../../auth/interfaces/access-level.enum";
 
 export const updateTeam = async (updatedTeam: UpdateTeam,idTeam: UUIDTypes): 
 Promise< MessageError | Team > => {
     const client = useAuthStore();
 
-    if(client.client?.access_level === "admin") {
+    if(client.client?.access_level === AccessLevel.admin) {
 
         try {
 

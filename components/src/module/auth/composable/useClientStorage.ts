@@ -1,8 +1,10 @@
 import { ref } from 'vue';
 import type { Client } from '../interfaces/client.interface';
+import { useCookies } from 'vue3-cookies';
 
 const CLIENT_STORAGE_KEY = 'client';
 const client = ref<Client | null>(null);
+const { cookies } = useCookies();
 
 export function useClientStorage() {
 
@@ -22,6 +24,7 @@ export function useClientStorage() {
             client.value = raw ? JSON.parse(raw) as Client : null;
         } catch (err) {
             console.error('Error al leer localStorage:', err);
+            cookies.remove
             clearClient();
         }
     };

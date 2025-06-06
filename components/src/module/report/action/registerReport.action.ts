@@ -1,26 +1,27 @@
 import { managementApi } from "../../../api/managementApi";
-import type { Client } from "../../auth/interfaces/client.interface";
 import { useAuthStore } from "../../auth/stores/auth.store";
 import type { MessageError } from "../../common/interface/message-error.interface";
 import { isAxiosError } from "axios";
-import type { UUIDTypes } from "uuid";
-import type { StatusCode } from "../../common/interface/status-code.interface";
+import type { CreateOrder } from "../interface/createOrder.interface";
+import type { Order } from "../interface/orders.interface";
+import { AccessLevel } from "../../auth/interfaces/access-level.enum";
 
-export const deleteClient = async (client_id: UUIDTypes): 
-
-Promise< MessageError | StatusCode > => {
+export const registerOrder = async (newOrder: CreateOrder): 
+Promise< MessageError | Order[] > => {
     const client = useAuthStore();
 
-    if(client.client?.access_level === "admin") {
+    if(client.client?.access_level != AccessLevel.technical) {
         try {
             
-            let response = await managementApi.delete<Client[]>(`/client/${client_id}`);
+            let response = await managementApi.post<Order[]>('/order',{
+                team: newOrder.team,
+                client: newOrder.client,
+                notice_date: new Date(newOrder.notice_date).toISOString(),
+                fault_description: newOrder.fault_description
+            });
 
-            let statusCode: StatusCode = { 
-                code: response.status
-            }
-            
-            return  statusCode 
+            let order: Order[] = response.data
+            return order
 
         } catch (error) {
             return {

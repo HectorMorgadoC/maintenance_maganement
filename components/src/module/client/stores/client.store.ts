@@ -7,7 +7,7 @@ export const useClientItemStore = defineStore('client', () => {
 
     let clientItem = ref<Client>({
         username: "",
-        access_level: AccessLevel.operator
+        access_level: AccessLevel.operator,
     })
 
     const setClientItem = (client: Client) => {

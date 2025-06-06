@@ -7,12 +7,13 @@ import { isAxiosError } from "axios";
 import type { UUIDTypes } from "uuid";
 import type { UpdateProcess } from "../interface/updateProcess.interface";
 import type { Process } from "../interface/process.interface";
+import { AccessLevel } from "../../auth/interfaces/access-level.enum";
 
 export const updateProcess = async (updatedProcess: UpdateProcess,idProcess: UUIDTypes): 
 Promise< MessageError | Process > => {
     const client = useAuthStore();
 
-    if(client.client?.access_level === "admin") {
+    if(client.client?.access_level === AccessLevel.admin) {
 
         try {
 

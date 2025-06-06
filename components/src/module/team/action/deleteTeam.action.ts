@@ -6,13 +6,14 @@ import type { UUIDTypes } from "uuid";
 import type { StatusCode } from "../../common/interface/status-code.interface";
 
 import type { Team } from "../interface/team.interface";
+import { AccessLevel } from "../../auth/interfaces/access-level.enum";
 
 export const deleteTeam = async (team_id: UUIDTypes): 
 
 Promise< MessageError | StatusCode > => {
     const client = useAuthStore();
 
-    if(client.client?.access_level === "admin") {
+    if(client.client?.access_level === AccessLevel.admin) {
         try {
             
             let response = await managementApi.delete<Team>(`/team/${team_id}`);

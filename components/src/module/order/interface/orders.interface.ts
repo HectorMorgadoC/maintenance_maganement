@@ -4,5 +4,5 @@ export interface Order {
     description: string,
     state: boolean,
     client: string,
-    process: string
+    team: string
 }

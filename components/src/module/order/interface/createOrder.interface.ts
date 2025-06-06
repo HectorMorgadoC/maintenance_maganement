@@ -3,5 +3,6 @@ export interface CreateOrder {
     client: string
     notice_date: string
     fault_description: string
+    order_state?:boolean
 }
 

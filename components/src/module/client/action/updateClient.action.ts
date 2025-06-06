@@ -5,12 +5,13 @@ import type { MessageError } from "../../common/interface/message-error.interfac
 import { isAxiosError } from "axios";
 import type { UpdateClient } from "../interface/updateClient";
 import type { UUIDTypes } from "uuid";
+import { AccessLevel } from "../../auth/interfaces/access-level.enum";
 
 export const updateClient = async (updatedClient: UpdateClient,idClient: UUIDTypes): 
 Promise< MessageError | Client > => {
     const client = useAuthStore();
 
-    if(client.client?.access_level === "admin") {
+    if(client.client?.access_level === AccessLevel.admin) {
 
     const body: any = {
         username: updatedClient.username,

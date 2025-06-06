@@ -57,15 +57,8 @@ import CardMain from '../components/CardMain.vue';
 import { useAuthStore } from '../../auth/stores/auth.store';
 import { AccessLevel } from '../../auth/interfaces/access-level.enum';
 
-
 const authStores = useAuthStore()
 const accessLevel = authStores.client?.access_level 
 
-if (accessLevel === AccessLevel.operator) {
-    console.log( "si" )
-}
-
-const level = AccessLevel.operator
-console.log(level)
 
 </script>

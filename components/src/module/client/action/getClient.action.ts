@@ -1,18 +1,15 @@
 import { managementApi } from "../../../api/managementApi";
+import { AccessLevel } from "../../auth/interfaces/access-level.enum";
 import type { Client } from "../../auth/interfaces/client.interface";
 import { useAuthStore } from "../../auth/stores/auth.store";
 import type { MessageError } from "../../common/interface/message-error.interface";
 import { isAxiosError } from "axios";
 
-
-
-
-
 export const getClient = async (): 
 Promise< MessageError | Client[] > => {
     const client = useAuthStore();
 
-    if(client.client?.access_level === "admin") {
+    if(client.client?.access_level === AccessLevel.admin) {
         try {
             
             let response = await managementApi.get<Client[]>('/client',{
