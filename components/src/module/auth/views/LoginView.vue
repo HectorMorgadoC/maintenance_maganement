@@ -18,13 +18,13 @@
                 </label>
                 <input
                     @click="statusExceptionMessage = false"
-                    v-model="myForm.username"
-                    type="text"
-                    id="client"
-                    name="client"
+                    v-model="myForm.email"
+                    type="email"
+                    id="email"
+                    name="email"
                     ref="clientInputRef"
                     required
-                    placeholder="Ingrese nombre del cliente"
+                    placeholder="Ingrese correo"
                     class="placeholder-gray-400 w-full px-4 py-3 text-[#98B6B6] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 />
             </div>
@@ -94,13 +94,13 @@
     clearClient();
 
     const myForm = reactive({
-        username: '',
+        email: '',
         password: '',
         remenberMe: false,
     });
 
     const onLogin = async () => {
-        if (myForm.username === '') {
+        if (myForm.email === '') {
             return clientInputRef.value?.focus();
         }
 
@@ -108,7 +108,7 @@
             return passwordInputRef.value?.focus();
         }
 
-        const login = await authStores.login(myForm.username, myForm.password);
+        const login = await authStores.login(myForm.email, myForm.password);
 
         if (!login) {
             exceptionMessage.value = authStores.message;

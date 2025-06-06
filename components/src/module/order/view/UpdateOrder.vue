@@ -118,7 +118,7 @@
     import { useField, useForm } from 'vee-validate';
     import * as yup from 'yup'
     import { useClientItemStore } from '../stores/client.store';
-    import type { UpdateClient } from '../interface/updateClient';
+    import type { UpdateClient } from '../interface/updateOrder.interface';
     import { AccessLevel } from '../../auth/interfaces/access-level.enum';
     import { updateClient } from '../action/updateClient.action';
 import type { UUIDTypes } from 'uuid';

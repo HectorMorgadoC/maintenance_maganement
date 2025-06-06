@@ -16,7 +16,7 @@
     </div>
     <div v-else>
         <ActionPanel 
-            :title="selectedItem.username" 
+            :title="actionPanelTitle" 
             :data="selectedItem"
             router_delete="deleteOrder"
             router_update="updateOrder"
@@ -38,15 +38,17 @@ const props = defineProps<{
     data_list: Order[]
 }>()
 
-
+const emit = defineEmits(["onStatusMenu"])
 const selectedItem = ref<any>({});
 const isEditMode = ref<Boolean>(false);
-
+const actionPanelTitle = ref<string>('');
 
 const selectItem = (item: any) => {
     selectedItem.value = item;
-    isEditMode.value = true
-    clientstore.setClientItem(item)
+    actionPanelTitle.value = `Orden: ${selectedItem.value.id.slice(0,6)}`;
+    isEditMode.value = true;
+    clientstore.setClientItem(item);
+    emit("onStatusMenu",isEditMode.value);
 }
 
 </script>

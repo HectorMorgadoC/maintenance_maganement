@@ -6,7 +6,7 @@ import { useCookies } from 'vue3-cookies';
 import type { AccessLevel } from '../interfaces/access-level.enum';
 
 export const loginAction = async (
-  username: string,
+  email: string,
   password: string,
 ): Promise< MessageError | Client > => {
 
@@ -15,7 +15,7 @@ export const loginAction = async (
 
   try {
     const response  = await managementApi.post<Client>('/client/login', {
-      username,
+      email,
       password,
     });
 
@@ -29,7 +29,8 @@ export const loginAction = async (
       username: client.username,
       access_level: client.access_level as AccessLevel,
       teams: client.teams,
-      process: client.process
+      process: client.process,
+      clients: client.clients
     };
   } catch (error) {
 

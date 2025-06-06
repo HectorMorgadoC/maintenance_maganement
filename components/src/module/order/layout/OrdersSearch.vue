@@ -1,7 +1,8 @@
 <template>
     <ButtonCreate title="Ordenes" title_button="Crear orden" patch="createOrder"/>
     <div class="flex flex-col justify-center items-center min-h-screen">
-        <form @submit.prevent="getListOrder" class="w-full max-w-md bg-[#3d3b46] p-6 sm:p-8 md:p-10 shadow-md">
+        <div v-if="!onMenu">
+            <form @submit.prevent="getListOrder" class="w-full max-w-md bg-[#3d3b46] p-6 sm:p-8 md:p-10 shadow-md">
             <h3 
             class="mb-5 block text-4xl text-center font-extrabolt text-[#EEE0D3] mb-1"
             >Busqueda de ordenes de trabajo</h3>
@@ -18,7 +19,7 @@
                 id="process"
                 class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 >
-                    <option disabled value="">Seleccione un processo</option>
+                    <option disabled value="">Seleccione un equipo</option>
                     <option 
                     v-for="(team, index) in listTeam"
                     :key="index"
@@ -36,14 +37,21 @@
                 >
                     Cliente
                 </label>
-                <input
-                    v-model="OrderForm.client"
-                    type="text"
-                    id="client"
-                    name="client"
-                    placeholder="Ingrese nombre del cliente"
-                    class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
-                />
+                <select
+                v-model="OrderForm.client"
+                name="client" 
+                id="client"
+                class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
+                >
+                    <option disabled value="">Seleccione un cliente</option>
+                    <option 
+                    v-for="(client, index) in listClient"
+                    :key="index"
+                    :value="client.id"
+                    >
+                        {{ client.username }}</option>
+                    
+                </select>
             </div>
 
             <div class="mb-3">
@@ -93,11 +101,17 @@
                 Consultar
             </button>
         </form>
+        </div>
+        
         <div class="flex gap-[20px] flex-row flex-wrap justify-center items-center content-center list-none mt-10">
             <div v-if="!onStatus" >
                 <h3 class="mb-5 block text-4xl text-center font-extrabolt text-[#EEE0D3] mb-1">No hay registro</h3>
             </div>
-            <CardInfoOrder v-else :data_list=listOrders title="ordenes" />
+            <CardInfoOrder v-else 
+            :data_list=listOrders 
+            title="ordenes"
+            @on-status-menu="statusMenu"
+            />
         </div>
     </div>
 
@@ -112,12 +126,25 @@ import { getOrderFilters } from '../action/getOrdersFilter.action';
 import router from '../../../router';
 import { useToast } from 'vue-toastification';
 import ButtonCreate from '../../common/components/ButtonCreate.vue';
+import type { SubClient } from '../../auth/interfaces/subClient-interface';
+import { AccessLevel } from '../../auth/interfaces/access-level.enum';
 
 const clientStore = useClientStorage();
 const listTeam = ref<Team[]>([])
+const listClient = ref<SubClient[]>([]);
 
 const toast = useToast()
-listTeam.value = clientStore.client.value?.teams
+listTeam.value = clientStore.client.value?.teams || []
+
+if(clientStore.client.value?.access_level != AccessLevel.operator && clientStore.client.value?.clients ){
+    listClient.value = clientStore.client.value?.clients
+} else {
+    listClient.value.push({
+        id: clientStore.client.value?.id || "",
+        username: clientStore.client.value?.username || ""
+    })
+}
+
 
 const OrderForm = reactive({
     team:"",
@@ -126,16 +153,10 @@ const OrderForm = reactive({
     is_actived:""
 })
 
-const statusList = ["true","false"];
-
-
-
+const statusList = [true,false];
 const paramsUrl = ref<String>("")
-
-
-
 const onStatus = ref<boolean>(false)
-
+const onMenu =ref<boolean>(false)
 const listOrders = ref<Order[]>([])
 
 const getListOrder = async () => {
@@ -148,15 +169,22 @@ const getListOrder = async () => {
         );
 
         if (Array.isArray(response)) {
-            listOrders.value = response;
-            onStatus.value = true;
-            console.log(listOrders.value)
+            if(response.length > 0) {
+                listOrders.value = response;
+                onStatus.value = true;
+            } else {
+                onStatus.value = false;
+            }
             resetForm()
         }
         
         if ("statusCode" in response) {
             if(response.statusCode === 404 ) {
                 router.replace({ name: 'NotFound' });
+            }
+
+            if(response.statusCode === 400 ) {
+                toast.warning(`Bad Request: ${response.message}`);
             }
 
             if(response.statusCode === 401 ) {
@@ -173,11 +201,18 @@ const getListOrder = async () => {
         toast.error("Request error")
     }
 }
-const resetForm = () => {
-    OrderForm.team = ""
-    OrderForm.client = ""
-    OrderForm.date = ""
-    OrderForm.is_actived = ""
-    paramsUrl.value = ""
-}
+
+    const statusMenu = (onStatusMenu: boolean) => {
+        console.log(onMenu.value)
+        onMenu.value = onStatusMenu
+        console.log(onMenu.value)
+    }
+
+    const resetForm = () => {
+        OrderForm.team = ""
+        OrderForm.client = ""
+        OrderForm.date = ""
+        OrderForm.is_actived = ""
+        paramsUrl.value = ""
+    }
 </script>

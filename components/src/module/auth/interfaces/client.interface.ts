@@ -1,6 +1,7 @@
 import type { Process } from "../../process/interface/process.interface";
-import type { Team } from "../../common/interface/team.interface";
+import type { Team } from "../../team/interface/team.interface";
 import { AccessLevel } from "./access-level.enum";
+import type { SubClient } from "./subClient-interface";
 
 export interface Client {
     id?: string
@@ -8,5 +9,7 @@ export interface Client {
     access_level: AccessLevel,
     teams?: Team[],
     process?: Process[],
-    email?: string
+    email?: string,
+    clients?: SubClient[]
 }
+

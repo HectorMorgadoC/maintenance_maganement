@@ -3,7 +3,7 @@ import type { Client } from "../../auth/interfaces/client.interface";
 import { useAuthStore } from "../../auth/stores/auth.store";
 import type { MessageError } from "../../common/interface/message-error.interface";
 import { isAxiosError } from "axios";
-import type { UpdateClient } from "../interface/updateClient";
+import type { UpdateClient } from "../interface/updateOrder.interface";
 import type { UUIDTypes } from "uuid";
 
 export const updateClient = async (updatedClient: UpdateClient,idClient: UUIDTypes): 

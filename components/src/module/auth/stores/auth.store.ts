@@ -24,9 +24,9 @@ export const useAuthStore = defineStore('auth', () => {
 
   loadClient()
 
-  const login = async (username: string, password: string) => {
+  const login = async (email: string, password: string) => {
     try {
-      const loginResponse = await loginAction(username, password);
+      const loginResponse = await loginAction(email, password);
       if ('error' in loginResponse) {
         logout();
         if( loginResponse.statusCode === 400 ){
