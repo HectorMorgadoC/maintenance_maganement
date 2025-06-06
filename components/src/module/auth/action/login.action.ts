@@ -26,6 +26,7 @@ export const loginAction = async (
     cookies.set(TOKEN_COOKIE_KEY, token, '1d');
     
     return {
+      id: client.id,
       username: client.username,
       access_level: client.access_level as AccessLevel,
       teams: client.teams,

@@ -12,7 +12,7 @@
                     Equipo
                 </label>
                 <select
-                v-model="team"
+                v-model=team
                 id="team"
                 class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 >
@@ -35,8 +35,8 @@
                     Cliente
                 </label>
                 <select
-                v-model="client"
-                id="client"
+                v-model=client
+                id="team"
                 class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 >
                     <option disabled value="">Seleccione un cliente</option>
@@ -58,7 +58,7 @@
                     Fecha de aviso
                 </label>
                 <input
-                    v-model="notice_date"
+                    v-model=notice_date
                     type="datetime-local"
                     id="notice_date"
                     name="notice_date"
@@ -75,8 +75,8 @@
                     Descripcion de la falla
                 </label>
                 <input
-                    v-model="fault_description"
-                    type="fault_description"
+                    v-model=fault_description
+                    type="text"
                     id="fault_description"
                     name="fault_description"
                     required
@@ -127,7 +127,6 @@
     import type { Team } from '../../team/interface/team.interface';
     import type { SubClient } from '../../auth/interfaces/subClient-interface';
 
-
     const clientStore = useClientStorage();
     const listTeam = ref<Team[]>([])
     const listClient = ref<SubClient[]>([]);
@@ -173,53 +172,33 @@
     const onStatus = ref<boolean>(false)
     
     const registerInfo = () => {
-        
         if(errors) {
-            if("team" in errors.value) {
-                toast.warning(`Team: ${errors.value.team}`)
-            }
-        
-            if("client" in errors.value) {
-                toast.warning(`Client: ${errors.value.client}`)
-            }
-        
-            if("notice_date" in errors.value) {
-                toast.warning(`Notice date: ${errors.value.notice_date}`)
-            }
-
-            if("fault_description" in errors.value) {
-                toast.warning(`Fault description: ${errors.value.fault_description}`)
-            }
+            if("team" in errors.value) toast.warning(`Team: ${errors.value.team}`)
+            if("client" in errors.value) toast.warning(`Client: ${errors.value.client}`)
+            if("notice_date" in errors.value) toast.warning(`Notice date: ${errors.value.notice_date}`)
+            if("fault_description" in errors.value) toast.warning(`Fault description: ${errors.value.fault_description}`)
             onStatus.value = false
         } 
-    
+
         onStatus.value = true
     }
     
     const onRegister = async (newOrder: CreateOrder) => {
-            if (clientStore.client.value?.access_level != AccessLevel.technical) {
-                console.log(newOrder)
-                try {
+        if (clientStore.client.value?.access_level != AccessLevel.technical) {
+            console.log(newOrder)
+            try {
                 const response = await registerOrder(newOrder);
                 if (response) {
                     if ("statusCode" in response) {
-                        if(response.statusCode === 404 ) {
-                            router.replace({ name: 'NotFound' });
-                        }
-                    
-                        if(response.statusCode === 400 ) {
-                            toast.warning(`Bad request ${response.message}`)
-                        }
+                        if(response.statusCode === 404 ) router.replace({ name: 'NotFound' });
+                        if(response.statusCode === 400 ) toast.warning(`Bad request ${response.message}`)
                     
                         if(response.statusCode === 403 || response.statusCode === 401) {
                             toast.error("Not authorized")
                             router.replace({ name: 'login' });
                         }
 
-                        if(response.statusCode === 0 || response.statusCode === 500) {
-                            router.replace({ name: 'ServerError' });
-                        }
-                    
+                        if(response.statusCode === 0 || response.statusCode === 500) router.replace({ name: 'ServerError' });
                     }
 
                     if("id" in response) {
@@ -227,15 +206,12 @@
                         resetForm()
                         onStatus.value = false
                     }
-
                 }
-                } catch (error) {
-                    toast.error("Request error")
-                }
+            } catch (error) {
+                toast.error("Request error")
             }
-        
-        
         }
+    }
     
     const cancelRegisterInfo = (value: boolean) => {
         onStatus.value = value
