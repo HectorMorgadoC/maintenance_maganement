@@ -1,8 +1,11 @@
+import type { OrderState } from "./orderState.interface";
+
 export interface Order {
     id: string,
     date: string,
     description: string,
-    state: boolean,
+    state: OrderState,
     client: string,
-    team: string
+    team: string,
+    observation: string
 }

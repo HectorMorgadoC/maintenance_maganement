@@ -84,16 +84,39 @@
                 />
             </div>
             <div class="mb-3">
-                <label for="is_actived" class="flex items-center gap-3 text-xl font-medium text-[#EEE0D3] my-2">
-                    Estado de la orden
-                    <input
-                        v-model="order_state"
-                        type="checkbox"
-                        id="order_state"
-                        name="order_state"
-                        class="w-5 h-5 accent-[#F2564F]"
-                    />
+                <label for="order_state" class="flex items-center gap-3 text-xl font-medium text-[#EEE0D3] my-2">
+                    Estado de la orden : {{ currentOrderStatus[0] }}
                 </label>
+                <select
+                v-model="state"
+                name="state" 
+                id="state"
+                class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
+                >
+                    <option disabled value="">{{ currentOrderStatus[0] }}</option>
+                    <option 
+                    v-for="[key, value] in Object.entries(OrderState)"
+                    :value="value"
+                    >
+                        {{ key }}</option>
+                    
+                </select>
+            </div>
+            <div class="mb-3">
+                <label 
+                    for="lastname" 
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
+                >
+                    Observacion
+                </label>
+                <input
+                    v-model="observation"
+                    type="text"
+                    id="observation"
+                    name="observation"
+                    :placeholder="currentOrder.observation"
+                    class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
+                />
             </div>
             <button
                 @click="onRegister({
@@ -101,7 +124,8 @@
                     client: values.client,
                     notice_date: values.date,
                     fault_description: values.description,
-                    order_state: values.order_state
+                    order_state: values.state,
+                    observation: values.observation
                 }, currentOrder.id as UUIDTypes)"
                 type="submit"
                 class="w-full bg-[#FC3B47] text-xl text-[#EEE0D3] py-3 mt-4 font-semibold hover:bg-[#F2564F] transition"
@@ -126,6 +150,7 @@
     import { useClientStorage } from '../../auth/composable/useClientStorage';
     import type { Team } from '../../team/interface/team.interface';
     import type { SubClient } from '../../auth/interfaces/subClient-interface';
+    import { OrderState } from '../interface/orderState.interface';
 
     const clientStore = useClientStorage();
     const listTeam = ref<Team[]>([])
@@ -154,7 +179,10 @@
         fault_description: yup
         .string()
         .min(10,"Minimo 10 caracteres")
-        .max(200,"Maximo  200 caracteres")
+        .max(200,"Maximo  200 caracteres"),
+        state: yup.string(),
+        observation: yup.string()
+
     })
 
     const { errors,values,resetForm } = useForm({
@@ -164,7 +192,8 @@
         client: idClient.value,
         date: currentOrder.date,
         description: currentOrder.description,
-        order_state:currentOrder.state
+        state:currentOrder.state,
+        observation: currentOrder.observation
         }
     })
 
@@ -172,16 +201,22 @@
     const { value: client } = useField<string>('client')
     const { value: date } = useField<string>('date')
     const { value: description } = useField<string>('description')
-    const { value: order_state } = useField<boolean>('order_state')
-    
+    const { value: state } = useField<OrderState>('state')
+    const { value: observation } = useField<string>('observation')
+
     const onStatus = ref<boolean>(false)
     
+    const currentOrderStatus = Object.entries(OrderState).find(([key, value]) => 
+        value === currentOrder.state
+    ) || ['', ''];
+
     const registerInfo = () => {
         if(errors) {
             if("team" in errors.value) toast.warning(`Team: ${errors.value.team}`)
             if("client" in errors.value) toast.warning(`Client: ${errors.value.client}`)
             if("notice_date" in errors.value) toast.warning(`Notice date: ${errors.value.notice_date}`)
             if("fault_description" in errors.value) toast.warning(`Fault description: ${errors.value.fault_description}`)
+            if("order_state" in errors.value) toast.warning(`Order state: ${errors.value.order_state}`)
             onStatus.value = false
         } 
 
@@ -189,7 +224,6 @@
     }
     
     const onRegister = async (newOrder: UpdateOrder,id: UUIDTypes) => {
-        console.log("estado de orden: "+newOrder.order_state)
         if (clientStore.client.value?.access_level != AccessLevel.technical) {
             try {
                 const response = await updateOrder(newOrder,id);

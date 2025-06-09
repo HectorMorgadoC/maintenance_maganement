@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import type { Order } from "../interface/orders.interface";
+import { OrderState } from "../interface/orderState.interface";
 
 export const useOrderItemStore = defineStore('order', () => {
 
@@ -8,9 +9,10 @@ export const useOrderItemStore = defineStore('order', () => {
         id: "",
         date: "",
         description: "",
-        state: false,
+        order_state: OrderState.Esperando,
         client: "",
-        process: ""
+        team: "",
+        observation: ""
     })
 
     const setOrderItem = (order: Order) => {

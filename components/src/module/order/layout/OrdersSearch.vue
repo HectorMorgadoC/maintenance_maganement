@@ -71,29 +71,28 @@
                 />
             </div>
 
-            <div class="mb-3">
+            <div v-if="!isStateOrder" class="mb-3">
                 <label 
-                    for="city" 
+                    for="order_state" 
                     class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
                     Estado de orden
                 </label>
                 <select
-                v-model="OrderForm.is_actived"
-                name="is_actived" 
-                id="is_actived"
+                v-model="OrderForm.order_state"
+                name="order_state" 
+                id="order_state"
                 class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 >
+                    <option disabled value="">Seleccione un estado</option>
                     <option 
-                    v-for="(is_actived, index) in statusList"
-                    :key="index"
+                    v-for="[key, value] in Object.entries(OrderState)"
+                    :value="value"
                     >
-                        {{ is_actived }}</option>
+                        {{ key }}</option>
                     
                 </select>
             </div>
-
-
             <button
                 type="submit"
                 class="w-full bg-[#FC3B47] text-xl text-[#EEE0D3] py-3 mt-4 font-semibold hover:bg-[#F2564F] transition"
@@ -128,10 +127,12 @@ import { useToast } from 'vue-toastification';
 import ButtonCreate from '../../common/components/ButtonCreate.vue';
 import type { SubClient } from '../../auth/interfaces/subClient-interface';
 import { AccessLevel } from '../../auth/interfaces/access-level.enum';
+import { OrderState } from '../interface/orderState.interface';
 
 const clientStore = useClientStorage();
 const listTeam = ref<Team[]>([])
 const listClient = ref<SubClient[]>([]);
+const isStateOrder = ref<boolean>(false)
 
 const toast = useToast()
 listTeam.value = clientStore.client.value?.teams || []
@@ -139,6 +140,7 @@ listTeam.value = clientStore.client.value?.teams || []
 if(clientStore.client.value?.access_level != AccessLevel.operator && clientStore.client.value?.clients ){
     listClient.value = clientStore.client.value?.clients
 } else {
+    isStateOrder.value = true
     listClient.value.push({
         id: clientStore.client.value?.id || "",
         username: clientStore.client.value?.username || ""
@@ -150,10 +152,10 @@ const OrderForm = reactive({
     team:"",
     client:"",
     date:"",
-    is_actived:""
+    order_state:"",
 })
 
-const statusList = [true,false];
+//const statusList = [true,false];
 const paramsUrl = ref<String>("")
 const onStatus = ref<boolean>(false)
 const onMenu =ref<boolean>(false)
@@ -165,7 +167,7 @@ const getListOrder = async () => {
             OrderForm.team,
             OrderForm.client,
             OrderForm.date,
-            OrderForm.is_actived
+            OrderForm.order_state
         );
 
         if (Array.isArray(response)) {
@@ -210,7 +212,7 @@ const getListOrder = async () => {
         OrderForm.team = ""
         OrderForm.client = ""
         OrderForm.date = ""
-        OrderForm.is_actived = ""
+        OrderForm.order_state = ""
         paramsUrl.value = ""
     }
 </script>

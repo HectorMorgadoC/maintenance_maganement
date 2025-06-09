@@ -21,7 +21,8 @@ Promise< MessageError | Order > => {
         client: updatedOrder.client,
         notice_date: updatedOrder.notice_date,
         fault_description: updatedOrder.fault_description,
-        order_state: updatedOrder.order_state
+        order_state: updatedOrder.order_state,
+        observation: updatedOrder.observation
     };
 
         try {

@@ -128,8 +128,6 @@
     import type { SubClient } from '../../auth/interfaces/subClient-interface';
     import type { Process } from '../../process/interface/process.interface';
 
-
-
     const clientStore = useClientStorage();
     const listTeam = ref<Team[]>([])
     const listClient = ref<SubClient[]>([]);
