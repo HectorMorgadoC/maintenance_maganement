@@ -9,7 +9,7 @@ export const useOrderItemStore = defineStore('order', () => {
         id: "",
         date: "",
         description: "",
-        order_state: OrderState.Esperando,
+        state: OrderState.Esperando,
         client: "",
         team: "",
         observation: ""

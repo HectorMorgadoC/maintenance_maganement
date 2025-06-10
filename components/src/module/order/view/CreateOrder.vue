@@ -135,9 +135,9 @@
     const customerProcess = ref<string>("")
     const toast = useToast();
 
+    
     listTeam.value = clientStore.client.value?.teams || []
     listProcess.value = clientStore.client.value?.process || []
-
     const schema = yup.object({
         team: yup.string().required('Campo requerido'),
         client: yup.string().required('Campo requerido'),
@@ -164,12 +164,14 @@
     const { value: notice_date } = useField<string>('notice_date')
     const { value: fault_description } = useField<string>('fault_description')
     
-    if(clientStore.client.value?.access_level === AccessLevel.operator ){
+    if(clientStore.client.value?.access_level != AccessLevel.operator && clientStore.client.value?.clients ){
+            listClient.value = clientStore.client.value?.clients
+    } else {
         listClient.value.push({
-            id: clientStore.client.value?.id || "",
-            username: clientStore.client.value?.username || ""
-        })
-    } 
+        id: clientStore.client.value?.id || "",
+        username: clientStore.client.value?.username || ""
+    })
+}
     const onStatus = ref<boolean>(false)
     
     const registerInfo = () => {

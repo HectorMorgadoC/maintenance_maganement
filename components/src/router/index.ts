@@ -50,7 +50,7 @@ const router = createRouter({
         {
           path: 'reports',
           name: 'report',
-          component: () => import("../module/client/layout/ListClient.vue"),
+          component: () => import("../module/report/layout/ReportSearch.vue"),
           beforeEnter: isAuthenticatedGuard
         },
         {
@@ -127,6 +127,25 @@ const router = createRouter({
           path: 'update_order',
           name: 'updateOrder',
           component: () => import("../module/order/view/UpdateOrder.vue"),
+          beforeEnter: isAuthenticatedGuard
+        },
+        {
+          path: 'create_report',
+          name: 'createReport',
+          component: () => import("../module/report/view//CreateReport.vue"),
+          beforeEnter: isAuthenticatedGuard
+        },
+        {
+          path: 'delete_report',
+          name: 'deleteReport',
+          component: () => import("../module/report/view/DeleteReport.vue"),
+          props: true,
+          beforeEnter: isAuthenticatedGuard
+        },
+        {
+          path: 'update_report',
+          name: 'updateReport',
+          component: () => import("../module/report/view/UpdateReport.vue"),
           beforeEnter: isAuthenticatedGuard
         }
 

@@ -1,11 +1,11 @@
 import { managementApi } from "../../../api/managementApi";
 import type { MessageError } from "../../common/interface/message-error.interface";
 import { isAxiosError } from "axios";
-import type { Order } from "../interface/orders.interface";
+import type { Report } from "../interface/report.interface";
 import type { UUIDTypes } from "uuid";
 
-export const getOrderFilters = async (team:string,client:string,date:string,is_actived:string): 
-Promise< MessageError | Order[] > => {
+export const getReportFilters = async (team:string,client:string,date:string): 
+Promise< MessageError | Report[] > => {
     
         const params: Record<string, unknown> = {}
 
@@ -22,19 +22,13 @@ Promise< MessageError | Order[] > => {
             params.date_time = dateFormat
         }
 
-        if(is_actived){
-            params.order_state = is_actived
-        }
-
-
         try {
-            
-            let response = await managementApi.get<Order[]>('/order',{
+            let response = await managementApi.get<Report[]>('/report',{
                 params
             });
 
-            let orders: Order[] = response.data
-            return orders
+            let report: Report[] = response.data
+            return report
 
         } catch (error) {
             console.log(error)

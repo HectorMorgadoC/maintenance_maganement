@@ -1,11 +1,11 @@
 <template>
-    <ButtonCreate title="Ordenes" title_button="Crear orden" patch="createOrder"/>
+    <ButtonCreate title="Reportes" title_button="Crear reporte" patch="createReport"/>
     <div class="flex flex-col justify-center items-center min-h-screen">
         <div v-if="!onMenu">
-            <form @submit.prevent="getListOrder" class="w-full max-w-md bg-[#3d3b46] p-6 sm:p-8 md:p-10 shadow-md">
+            <form @submit.prevent="getListReport" class="w-full max-w-md bg-[#3d3b46] p-6 sm:p-8 md:p-10 shadow-md">
             <h3 
             class="mb-5 block text-4xl text-center font-extrabolt text-[#EEE0D3] mb-1"
-            >Busqueda de ordenes de trabajo</h3>
+            >Busqueda de reportes de trabajo</h3>
             <div class="mb-3">
                 <label 
                     for="client" 
@@ -14,7 +14,7 @@
                     Equipo
                 </label>
                 <select
-                v-model="OrderForm.team"
+                v-model="ReportForm.team"
                 name="process" 
                 id="process"
                 class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
@@ -38,7 +38,7 @@
                     Cliente
                 </label>
                 <select
-                v-model="OrderForm.client"
+                v-model="ReportForm.client"
                 name="client" 
                 id="client"
                 class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
@@ -62,7 +62,7 @@
                     Fecha de creacion
                 </label>
                 <input
-                    v-model="OrderForm.date"
+                    v-model="ReportForm.date"
                     type="datetime-local"
                     id="date"
                     name="date"
@@ -70,29 +70,6 @@
                     class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 />
             </div>
-
-            <div class="mb-3">
-                <label 
-                    for="city" 
-                    class="block text-xl font-medium text-[#EEE0D3] my-2"
-                >
-                    Estado de orden
-                </label>
-                <select
-                v-model="OrderForm.is_actived"
-                name="is_actived" 
-                id="is_actived"
-                class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
-                >
-                    <option 
-                    v-for="(is_actived, index) in statusList"
-                    :key="index"
-                    >
-                        {{ is_actived }}</option>
-                    
-                </select>
-            </div>
-
 
             <button
                 type="submit"
@@ -108,7 +85,7 @@
                 <h3 class="mb-5 block text-4xl text-center font-extrabolt text-[#EEE0D3] mb-1">No hay registro</h3>
             </div>
             <CardInfoOrder v-else 
-            :data_list=listOrders 
+            :data_list=listReport 
             title="ordenes"
             @on-status-menu="statusMenu"
             />
@@ -121,8 +98,8 @@ import { reactive, ref } from 'vue';
 import { useClientStorage } from '../../auth/composable/useClientStorage';
 import type { Team } from '../../team/interface/team.interface';
 import CardInfoOrder from '../view/CardInfoReport.vue';
-import type{ Order } from '../interface/orders.interface';
-import { getOrderFilters } from '../action/getReportFilter.action';
+import type{ Report } from '../interface/report.interface';
+import { getReportFilters } from '../action/getReportFilter.action';
 import router from '../../../router';
 import { useToast } from 'vue-toastification';
 import ButtonCreate from '../../common/components/ButtonCreate.vue';
@@ -136,41 +113,33 @@ const listClient = ref<SubClient[]>([]);
 const toast = useToast()
 listTeam.value = clientStore.client.value?.teams || []
 
-if(clientStore.client.value?.access_level != AccessLevel.operator && clientStore.client.value?.clients ){
+if(clientStore.client.value?.clients ){
     listClient.value = clientStore.client.value?.clients
-} else {
-    listClient.value.push({
-        id: clientStore.client.value?.id || "",
-        username: clientStore.client.value?.username || ""
-    })
 }
 
-
-const OrderForm = reactive({
+const ReportForm = reactive({
     team:"",
     client:"",
     date:"",
-    is_actived:""
 })
 
-const statusList = [true,false];
 const paramsUrl = ref<String>("")
 const onStatus = ref<boolean>(false)
 const onMenu =ref<boolean>(false)
-const listOrders = ref<Order[]>([])
+const listReport = ref<Report[]>([])
 
-const getListOrder = async () => {
-    try {
-        const response = await getOrderFilters(
-            OrderForm.team,
-            OrderForm.client,
-            OrderForm.date,
-            OrderForm.is_actived
+const getListReport = async () => {
+    if(clientStore.client.value?.access_level != AccessLevel.operator){
+        try {
+        const response = await getReportFilters(
+            ReportForm.team,
+            ReportForm.client,
+            ReportForm.date,
         );
 
         if (Array.isArray(response)) {
             if(response.length > 0) {
-                listOrders.value = response;
+                listReport.value = response;
                 onStatus.value = true;
             } else {
                 onStatus.value = false;
@@ -200,6 +169,10 @@ const getListOrder = async () => {
     } catch (error) {
         toast.error("Request error")
     }
+    } else {
+        toast.warning("Unauthorized charge")
+    }
+    
 }
 
     const statusMenu = (onStatusMenu: boolean) => {
@@ -207,10 +180,9 @@ const getListOrder = async () => {
     }
 
     const resetForm = () => {
-        OrderForm.team = ""
-        OrderForm.client = ""
-        OrderForm.date = ""
-        OrderForm.is_actived = ""
+        ReportForm.team = ""
+        ReportForm.client = ""
+        ReportForm.date = ""
         paramsUrl.value = ""
     }
 </script>
