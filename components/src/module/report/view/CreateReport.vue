@@ -387,7 +387,7 @@
                         if(response.statusCode === 0 || response.statusCode === 500) router.replace({ name: 'ServerError' });
                     }
 
-                    if("id" in response) {
+                    if("id_report" in response) {
                         toast.info("New registered customer")
                         resetForm()
                         onStatus.value = false

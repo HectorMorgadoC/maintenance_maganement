@@ -14,7 +14,6 @@ Promise< MessageError | Report > => {
         client.client?.access_level != undefined
     ) {
         try {
-            console.log(newReport)
             let response = await managementApi.post<Report>('/report',{
                 order: newReport.order,
                 client: newReport.client,
@@ -32,7 +31,6 @@ Promise< MessageError | Report > => {
             return report
 
         } catch (error) {
-            console.error(error)
             return {
                     message: `${isAxiosError(error) && error.response?.data.message}`,
                     error: `${isAxiosError(error) && error.response?.statusText}`,
