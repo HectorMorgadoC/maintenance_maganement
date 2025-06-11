@@ -4,9 +4,10 @@
             <h3 class="text-3xl font-medium text-[#F3ECDE] my-4 pb-2 text-center">{{ orderStore.orderItem.id.slice(0,6) }}</h3>
             
             <div class="w-full text-[#EEE0D3] text-justify text-2xl mb-6">
-                <p v-for="[key, value] in Object.entries(orderStore.orderItem)" :key="key" class="my-2 px-8">
-                    {{ key }}: {{ value }}
-                </p>
+                <p class="my-2 pl-2 text-justify"> Id: {{ orderStore.orderItem.id }}</p>
+                <p class="my-2 pl-2 text-justify"> Descripcion: {{ orderStore.orderItem.description }}</p>
+                <p class="my-2 pl-2 text-justify"> Creador: {{ orderStore.orderItem.client }}</p>
+                <p class="my-2 pl-2 text-justify"> Equipo: {{ orderStore.orderItem.team }}</p>
             </div>
 
             <div class="flex justify-center gap-4">
@@ -46,7 +47,7 @@ const deleteOrderForId = async() => {
 
         if("code" in response) {
             if(response.code === 200) {
-                toast.success("Order successfully eliminated")
+                toast.success("Orden eliminada con exito")
                 router.replace({name: "order"})
             }
         } else {

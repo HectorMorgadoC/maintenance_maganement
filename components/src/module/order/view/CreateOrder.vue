@@ -37,6 +37,7 @@
                 <select
                 v-model=client
                 id="team"
+                :disabled="!hasClient"
                 class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 >
                     <option disabled value="">Seleccione un cliente</option>
@@ -134,6 +135,7 @@
     const listProcess = ref<Process[]>([])
     const customerProcess = ref<string>("")
     const toast = useToast();
+    const hasClient = ref<boolean>(false)
 
     
     listTeam.value = clientStore.client.value?.teams || []
@@ -204,7 +206,7 @@
                     }
 
                     if("id" in response) {
-                        toast.info("New registered customer")
+                        toast.success("Orden de trabajo registrada")
                         resetForm()
                         onStatus.value = false
                     }
@@ -221,17 +223,21 @@
 
     watch(team, (newTeam) => {
 
-        const selectedTeam = listTeam.value.find(t => t.id === newTeam )?.process
+        const equipmentProcess = listTeam.value.find(t => t.id === newTeam )?.process
         const listProcessName = listProcess.value.map( p => p.name );
-        customerProcess.value = listProcessName.find(c => c === selectedTeam ) || ""
+        customerProcess.value = listProcessName.find(c => c === equipmentProcess ) || ""
 
         if(clientStore.client.value?.access_level != AccessLevel.operator && clientStore.client.value?.clients )  {
-        
-        listClient.value = clientStore.client.value?.clients.filter( c => { 
-            if(c.process === customerProcess.value) {
-                return c
+
+        listClient.value = clientStore.client.value?.clients.filter( (value) => { 
+                
+            if(value.process === equipmentProcess) { 
+                return value
             } 
         })
+
+
+        hasClient.value = true
     }
     })
 </script>

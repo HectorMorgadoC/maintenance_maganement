@@ -56,7 +56,7 @@
                     for="notice_date" 
                     class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
-                    Fecha de aviso: {{ currentOrder.date }}
+                    Fecha de aviso: {{ dateConvert(currentOrder.date) }}
                 </label>
                 <input
                     v-model=date
@@ -241,7 +241,7 @@
                     }
 
                     if("id" in response) {
-                        toast.info("New registered customer")
+                        toast.success("Registro de orden modificado")
                         resetForm()
                         router.replace({name: "order"})
                     }
@@ -250,6 +250,11 @@
                 toast.error("Request error")
             }
         }
+    }
+
+    const dateConvert= (date: string) => {
+        const [moday, hour] = date.split("T")
+        return `${moday} : ${hour.slice(0,5)}`
     }
 
 </script>

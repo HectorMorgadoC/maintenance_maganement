@@ -78,7 +78,7 @@
                     for="lastname" 
                     class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
-                    Tension de trabajo
+                    Tension de trabajo: Voltios
                 </label>
                 <input
                     v-model="working_voltage"
@@ -95,7 +95,7 @@
                     for="lastname" 
                     class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
-                    Potencia del equipo
+                    Potencia del equipo: kilowatts
                 </label>
                 <input
                     v-model="kilowatts"
@@ -142,13 +142,13 @@
             <DataConfirmation 
             title="Desea realizar registro" 
             :sample_data="{
-                Name: newTeam.name,
-                Description: newTeam.description,
-                March: newTeam.march,
-                Model: newTeam.model,
-                Working_voltage: newTeam.working_voltage,
-                kilowatts: newTeam.kilowatts,
-                Process: listProcess?.find(( p ) => {
+                Nombre: newTeam.name,
+                Descripcion: newTeam.description,
+                Marca: newTeam.march,
+                Modelo: newTeam.model,
+                Voltage: newTeam.working_voltage,
+                Potencia: newTeam.kilowatts,
+                Proceso: listProcess?.find(( p ) => {
                     return p.id === newTeam.process
                 })?.name,
                 }"
@@ -300,7 +300,7 @@
 
                 if("name" in response) {
                     await updateListTeam()
-                    toast.info("New registered customer")
+                    toast.success("Nuevo equipo registrado")
                     resetForm()
                     onStatus.value = false
                 }

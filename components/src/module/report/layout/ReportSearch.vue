@@ -1,5 +1,5 @@
 <template>
-    <ButtonCreate title="Reportes" title_button="Crear reporte" patch="createReport"/>
+    <ButtonCreate v-if="hasButtonCreate" title="Reportes" title_button="Crear reporte" patch="createReport"/>
     <div class="flex flex-col justify-center items-center min-h-screen">
         <div v-if="!onMenu">
             <form @submit.prevent="getListReport" class="w-full max-w-md bg-[#3d3b46] p-6 sm:p-8 md:p-10 shadow-md">
@@ -112,6 +112,13 @@ const listClient = ref<SubClient[]>([]);
 
 const toast = useToast()
 listTeam.value = clientStore.client.value?.teams || []
+
+const hasButtonCreate = ref<boolean>(false)
+
+if(clientStore.client.value?.access_level === AccessLevel.technical ||
+    clientStore.client.value?.access_level === AccessLevel.technical_supervisor
+) hasButtonCreate.value = true
+
 
 if(clientStore.client.value?.clients ){
     listClient.value = clientStore.client.value?.clients

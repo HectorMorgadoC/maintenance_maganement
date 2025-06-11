@@ -147,18 +147,17 @@
     
 </template>
 <script setup lang="ts">
-    import { ref } from 'vue';
     import router from '../../../router';
     import { useToast } from 'vue-toastification';
     import { useField, useForm } from 'vee-validate';
     import * as yup from 'yup'
     import { updateTeam } from '../action/updateTeam.action';
     import type { UUIDTypes } from 'uuid';
-    import type { CreateTeam } from '../interface/createTeam.interface';
     import { useAuthStore } from '../../auth/stores/auth.store';
     import type { UpdateTeam } from '../interface/updateTeam.interface';
     import { useTeamItemStore } from '../stores/team.store';
-import { updateListTeam } from '../action/updateListTeam';
+    import { updateListTeam } from '../action/updateListTeam';
+import { ref } from 'vue';
 
     const toast = useToast();
     const listProcess = useAuthStore().client?.process;
@@ -195,17 +194,6 @@ import { updateListTeam } from '../action/updateListTeam';
         }
     })
 
-    let newTeam = ref<CreateTeam>({
-        name: "",
-        description: "",
-        march:"",
-        model:"",
-        working_voltage:0,
-        kilowatts:0,
-        process: "",
-        is_actived: true
-    })
-
     const { value: name} = useField<string>('name')
     const { value: description } = useField<string>('description')
     const { value: march } = useField<string>('march')
@@ -215,18 +203,8 @@ import { updateListTeam } from '../action/updateListTeam';
     const { value: process } = useField<string>('process')
     const { value: is_actived } = useField<boolean>('is_actived')
     
-
+    const idProcess = ref<string>(String(listProcess?.find(process => process.name === values.process)?.id)|| "");
     const registerInfo = async () => {
-
-        newTeam.value = {
-            name : values.name,
-            description: values.description,
-            march: values.march,
-            model: values.model,
-            working_voltage: values.working_voltage,
-            kilowatts: values.kilowatts,
-            process: values.process || ""
-        }
 
         if(errors) {
             if("name" in errors.value) {
@@ -259,11 +237,12 @@ import { updateListTeam } from '../action/updateListTeam';
         
         } 
 
-            let response = await onRegister(newTeam.value,currentTeam.id as UUIDTypes)
+            let response = await onRegister({...values, process: idProcess.value }, currentTeam.id as UUIDTypes)
             if(response){
                 router.replace({name: "team"})
             }
     }
+    
     
     const onRegister = async (updatedTeam: UpdateTeam,idTeam: UUIDTypes): Promise<boolean> => {
         try {
@@ -297,7 +276,7 @@ import { updateListTeam } from '../action/updateListTeam';
 
                 if("name" in response) {
                     await updateListTeam();
-                    toast.success("Updated customer record")
+                    toast.success("Registro de equipo modificado")
                     router.replace({name: "team"})
                 }
                 

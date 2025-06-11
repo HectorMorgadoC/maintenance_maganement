@@ -19,7 +19,7 @@
                     placeholder="Ingrese orden de trabajo"
                     class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 />
-                <p v-if="hasOrder">Codigo de orden no valido</p>
+                <p v-if="hasOrder" class="text-[#FC3B47] text-2xl">Codigo de orden no valido </p>
             </div>
             
             <div class="mb-3">
@@ -238,15 +238,15 @@
             <DataConfirmation 
             title="Desea realizar registro" 
             :sample_data="{
-                team: teamOfOrder.name,
-                collaborators: values.collaborators,
-                fault_type: values.fault_type,
-                type_of_maintenance: values.type_of_maintenance,
-                from_date: values.from_date,
-                end_date: values.end_date,
-                summary_of_activities: values.summary_of_activities,
-                used_spare_parts: values.used_spare_parts,
-                remarks: values.remarks
+                Equipo: teamOfOrder.name,
+                Colaboradores: values.collaborators,
+                Tipo_falla: values.fault_type,
+                Tipo_mantenimiento: values.type_of_maintenance,
+                Inicio: values.from_date.slice(0,10),
+                Culminacion: values.end_date.slice(0,10),
+                Actividades: values.summary_of_activities,
+                Respuestos: values.used_spare_parts,
+                Comentarios: values.remarks
                 }"
             :data="values"
             @off-registration-status="cancelRegisterInfo"
@@ -388,7 +388,7 @@
                     }
 
                     if("id_report" in response) {
-                        toast.info("New registered customer")
+                        toast.success("Reporte registrado")
                         resetForm()
                         onStatus.value = false
                     }

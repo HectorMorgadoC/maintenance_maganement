@@ -57,7 +57,7 @@
                     <option :value=accessLevel.operator>Operador</option>
                     <option :value=accessLevel.production_supervisor>Supervisor de produccion</option>
                     <option :value=accessLevel.technical>Tecnico</option>
-                    <option :value=accessLevel.technical_supervisor>Supervisor </option>
+                    <option :value=accessLevel.technical_supervisor>Supervisor tecnico</option>
                 </select>
             </div>
 

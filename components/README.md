@@ -6,7 +6,7 @@ Learn more about the recommended Project Setup and IDE Support in the [Vue Docs 
 
 - #F2564F button hover
 - #2B2A31 fondo
-- #F3ECDE texto
+- #dbc69b texto
 - #3d3b46 fondo secundario
 - #575463 hover
 

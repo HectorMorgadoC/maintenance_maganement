@@ -19,7 +19,7 @@ Promise< MessageError | Order > => {
     const body: any = {
         team: updatedOrder.team,
         client: updatedOrder.client,
-        notice_date: updatedOrder.notice_date,
+        notice_date: new Date(updatedOrder.notice_date).toISOString(),
         fault_description: updatedOrder.fault_description,
         order_state: updatedOrder.order_state,
         observation: updatedOrder.observation
