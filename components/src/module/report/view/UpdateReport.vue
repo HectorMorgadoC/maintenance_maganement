@@ -4,43 +4,69 @@
             <h3 
             class="mb-5 block text-4xl text-center font-extrabolt text-[#EEE0D3] mb-1"
             >Registrar orden</h3>
-            <p class="block font-medium text-center text-[#EEE0D3] my-2">{{ currentOrder.id }}</p>
+            <p class="block font-medium text-center text-[#EEE0D3] my-2">{{ currentReport.id_report }}</p>
+            <div class="mb-3">
+                <label 
+                    for="order" 
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
+                >
+                    Orden de trabajo
+                </label>
+                <input
+                    type="text"
+                    id="id_order"
+                    name="id_order"
+                    :readonly="true"
+                    :placeholder=currentReport.id_order
+                    class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
+                />
+            </div>
+            <div class="mb-3">
+                <label 
+                    for="description_fault" 
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
+                >
+                    Descripcion de la falla
+                </label>
+                <input
+                    type="text"
+                    id="description_fault"
+                    name="description_fault"
+                    :placeholder= currentReport.description_fault
+                    class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
+                />
+            </div>
+            
             <div class="mb-3">
                 <label 
                     for="team" 
                     class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
-                    Equipo: {{ currentOrder.team }}
+                    Creador de orden
                 </label>
-                <select
-                v-model=team
-                id="team"
-                class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
-                >
-                    <option disabled value="">{{ currentOrder.team }}</option>
-                    <option 
-                    v-for="(team, index) in listTeam"
-                    :key="index"
-                    :value="team.id"
-                    >
-                        {{ team.name }}</option>
-                    
-                </select>
+                <input
+                    type="text"
+                    id="order_creator"
+                    name="order_creator"
+                    :placeholder=currentReport.order_creator
+                    :readonly="true"
+                    class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
+                />
             </div>
-
+            
             <div class="mb-3">
                 <label 
                     for="client" 
                     class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
-                    Cliente: {{ currentOrder.client }}
+                    Tecnico
                 </label>
                 <select
                 v-model=client
-                id="team"
+                id="client"
                 class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 >
-                    <option disabled value="">{{ currentOrder.client }}</option>
+                    <option disabled value="">{{ currentReport.technical }}</option>
                     <option 
                     v-for="(client, index) in listClient"
                     :key="index"
@@ -53,56 +79,196 @@
 
             <div class="mb-3">
                 <label 
-                    for="notice_date" 
+                    for="collaborators" 
                     class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
-                    Fecha de aviso: {{ currentOrder.date }}
+                    Colaboradores
                 </label>
                 <input
-                    v-model=date
-                    type="datetime-local"
-                    id="notice_date"
-                    name="notice_date"
+                    v-model=collaborators
+                    type="text"
+                    id="colaborators"
+                    name="colaborators"
+                    :placeholder=values.collaborators
                     class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 />
             </div>
 
             <div class="mb-3">
                 <label 
-                    for="fault_description" 
+                    for="team" 
                     class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
-                    Descripcion de la falla
+                    Equipo
                 </label>
                 <input
-                    v-model=description
                     type="text"
-                    id="fault_description"
-                    name="fault_description"
-                    :placeholder=currentOrder.description
+                    id="team"
+                    name="team"
+                    :placeholder=currentReport.team
+                    :readonly="true"
                     class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 />
             </div>
             <div class="mb-3">
-                <label for="is_actived" class="flex items-center gap-3 text-xl font-medium text-[#EEE0D3] my-2">
-                    Estado de la orden
-                    <input
-                        v-model="order_state"
-                        type="checkbox"
-                        id="order_state"
-                        name="order_state"
-                        class="w-5 h-5 accent-[#F2564F]"
-                    />
+                <label 
+                    for="fault_type" 
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
+                >
+                    Tipo de falla
                 </label>
+                <select
+                v-model=fault_type
+                id="faul_type"
+                class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
+                >
+                    <option disabled value="">{{ fault_type }}</option>
+                    <option 
+                    v-for="[key, typeFault] in Object.entries(faultType)"
+                    :value="typeFault"
+                    >
+                        {{ key }}</option>
+                    
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label 
+                    for="typeOfMaintenance" 
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
+                >
+                    Tipo de mantenimiento
+                </label>
+                <select
+                v-model=type_of_maintenance
+                id="typeOfMaintenance"
+                class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
+                >
+                    <option disabled value="">{{ type_of_maintenance }}</option>
+                    <option 
+                    v-for="[key, typeMaintenance] in Object.entries(typeOfMaintenance)"
+                    :value="typeMaintenance"
+                    >
+                        {{ key }}</option>
+                    
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label 
+                    for="notice_date" 
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
+                >
+                    Fecha de creacion: {{ currentReport.notice_date }}
+                </label>
+                <input
+                    type="datetime-local"
+                    id="notice_date"
+                    name="notice_date"
+                    class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
+                />
+            </div>
+            <div class="mb-3">
+                <label 
+                    for="from_date" 
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
+                >
+                    Fecha de inicio: {{ from_date }}
+                </label>
+                <input
+                    v-model=from_date
+                    type="datetime-local"
+                    id="from_date"
+                    name="from_date"
+                    class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
+                />
+            </div>
+
+            <div class="mb-3">
+                <label 
+                    for="end_date" 
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
+                >
+                    Fecha de culminacion: {{ end_date }}
+                </label>
+                <input
+                    v-model=end_date
+                    type="datetime-local"
+                    id="end_date"
+                    name="end_date"
+                    class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
+                />
+            </div>
+
+            <div class="mb-3">
+                <label 
+                    for="summary_of_activity" 
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
+                >
+                    Sumario de actividades
+                </label>
+                <textarea
+                    v-model=summary_of_activities
+                    type="text"
+                    id="summary_of_activities"
+                    name="summary_of_activities"
+                    :placeholder=values.summary_of_activities
+                    class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
+                    rows="3"
+                    maxlength="300"
+                    ></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label 
+                    for="used_spare_parts" 
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
+                >
+                    Respuestos usados
+                </label>
+                <textarea
+                    v-model=used_spare_parts
+                    type="text"
+                    id="used_spare_parts"
+                    name="used_spare_parts"
+                    :placeholder=used_spare_parts
+                    class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
+                    rows="3"
+                    maxlength="200"
+                    ></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label 
+                    for="remarks" 
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
+                >
+                    Comentarios(Adicional)
+                </label>
+                <textarea
+                    v-model=remarks
+                    type="text"
+                    id="remarks"
+                    name="remarks"
+                    :placeholder=remarks
+                    class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
+                    rows="3"
+                    maxlength="300"
+                    ></textarea>
             </div>
             <button
                 @click="onRegister({
-                    team: values.team,
+                    order: values.order,
                     client: values.client,
-                    notice_date: values.date,
-                    fault_description: values.description,
-                    order_state: values.order_state
-                }, currentOrder.id as UUIDTypes)"
+                    collaborators: values.collaborators,
+                    fault_type: values.fault_type,
+                    type_of_maintenance: values.type_of_maintenance,
+                    from_date: values.from_date,
+                    end_date: values.end_date,
+                    summary_of_activities: values.summary_of_activities,
+                    used_spare_parts: values.used_spare_parts,
+                    remarks: values.remarks
+                }, currentReport.id_report as UUIDTypes)"
                 type="submit"
                 class="w-full bg-[#FC3B47] text-xl text-[#EEE0D3] py-3 mt-4 font-semibold hover:bg-[#F2564F] transition"
             >
@@ -118,81 +284,114 @@
     import { useToast } from 'vue-toastification';
     import { useField, useForm } from 'vee-validate';
     import * as yup from 'yup'
-    import { useOrderItemStore } from '../stores/report.store';
-    import type { UpdateOrder } from '../interface/updateOrder.interface';
+    import { useReportItemStore } from '../stores/report.store';
     import { AccessLevel } from '../../auth/interfaces/access-level.enum';
-    import { updateOrder } from '../action/updateReport.action';
     import type { UUIDTypes } from 'uuid';
     import { useClientStorage } from '../../auth/composable/useClientStorage';
     import type { Team } from '../../team/interface/team.interface';
     import type { SubClient } from '../../auth/interfaces/subClient-interface';
+    import { FaulType } from '../interface/faultType.enum';
+    import { TypeOfMaintenance } from '../interface/typeOfMaintenance.enum';
+    import type { CreateReport } from '../interface/createReport.interface';
+    import { updateReport } from '../action/updateReport.action';
+
 
     const clientStore = useClientStorage();
     const listTeam = ref<Team[]>([])
     const listClient = ref<SubClient[]>([]);
+    const currentReport = useReportItemStore().reportItem
+    const typeOfMaintenance = TypeOfMaintenance
+    const faultType = FaulType;
     const toast = useToast();
+
+    clientStore.client.value?.clients?.map(client => {
+        if(client.access_level !== AccessLevel.operator &&
+            client.access_level !== AccessLevel.production_supervisor && 
+            client.access_level !== undefined
+        ){
+            listClient.value.push({
+            id: client.id,
+            username: client.username
+        })
+        }
+        
+    })
+
+    const idClient = ref<string>(listClient.value.find(c => c.username === currentReport.technical )?.id.toString() || "")
+    const formatForDatetimeLocal = (isoString: string) => {
+        const date = new Date(isoString)
+        const offset = date.getTimezoneOffset() * 60000
+        const local = new Date(date.getTime() - offset)
+        return local.toISOString().slice(0, 16) // "YYYY-MM-DDTHH:mm"
+    }
 
     listTeam.value = clientStore.client.value?.teams || []
 
-    if(clientStore.client.value?.access_level != AccessLevel.operator && clientStore.client.value?.clients ){
-        listClient.value = clientStore.client.value?.clients
-    } else {
-        listClient.value.push({
-            id: clientStore.client.value?.id || "",
-            username: clientStore.client.value?.username || ""
-        })
-    }
-
-    const currentOrder = useOrderItemStore().orderItem;
-    const idTeam = ref<string>(listTeam.value.find(t => t.name === currentOrder.team)?.id?.toString() || "")
-    const idClient = ref<string>(listClient.value.find(c => c.username === currentOrder.client)?.id.toString() || "")
-
     const schema = yup.object({
-        team: yup.string(),
+        order: yup.string(),
         client: yup.string(),
-        notice_date: yup.string(),
-        fault_description: yup
-        .string()
-        .min(10,"Minimo 10 caracteres")
-        .max(200,"Maximo  200 caracteres")
+        collaborators: yup.string().max(100,"Maximo 100 caracteres"),
+        fault_type: yup.string().max(30,"Maximo 30 caracteres"),
+        type_of_maintenance: yup.string().max(30,"Maximo 30 caracteres"),
+        from_date: yup.string(),
+        end_date: yup.string(),
+        summary_of_activities: yup.string().max(300,"Maximo 300 caracteres"),
+        used_spare_parts: yup.string().max(300,"Maximo 200 caracteres"),
+        remarks: yup.string().max(300,"Maximo 300 caracteres")
     })
 
     const { errors,values,resetForm } = useForm({
         validationSchema: schema,
         initialValues: {
-        team : idTeam.value,
+        order: currentReport.id_order,
         client: idClient.value,
-        date: currentOrder.date,
-        description: currentOrder.description,
-        order_state:currentOrder.state
+        collaborators: currentReport.collaborators,
+        fault_type: currentReport.fault_type,
+        type_of_maintenance: currentReport.type_of_maintenance,
+        from_date: formatForDatetimeLocal(currentReport.from_date),
+        end_date: formatForDatetimeLocal(currentReport.end_date),
+        summary_of_activities: currentReport.summary_of_activities,
+        used_spare_parts: currentReport.used_spare_parts,
+        remarks: currentReport.remarks,
         }
     })
 
-    const { value: team } = useField<string>('team')
     const { value: client } = useField<string>('client')
-    const { value: date } = useField<string>('date')
-    const { value: description } = useField<string>('description')
-    const { value: order_state } = useField<boolean>('order_state')
-    
+    const { value: collaborators }= useField<string>('collaborators')
+    const { value: fault_type }= useField<FaulType>('fault_type')
+    const { value: type_of_maintenance }= useField<TypeOfMaintenance>('type_of_maintenance')
+    const { value: from_date }= useField<string>('from_date')
+    const { value: end_date }= useField<string>('end_date')
+    const { value: summary_of_activities }= useField<string>('summary_of_activities')
+    const { value: used_spare_parts }= useField<string>('used_spare_parts')
+    const { value: remarks }= useField<string>('remarks')
+
     const onStatus = ref<boolean>(false)
     
     const registerInfo = () => {
         if(errors) {
-            if("team" in errors.value) toast.warning(`Team: ${errors.value.team}`)
+            if("client" in errors.value) toast.warning(`Technical: ${errors.value.client}`)
+            if("collaborators" in errors.value) toast.warning(`Collaborators: ${errors.value.collaborators}`)
             if("client" in errors.value) toast.warning(`Client: ${errors.value.client}`)
-            if("notice_date" in errors.value) toast.warning(`Notice date: ${errors.value.notice_date}`)
-            if("fault_description" in errors.value) toast.warning(`Fault description: ${errors.value.fault_description}`)
+            if("fault_type" in errors.value) toast.warning(`Fault_type: ${errors.value.fault_type}`)
+            if("type_of_maintenance" in errors.value) toast.warning(`Type_of_maintenance: ${errors.value.type_of_maintenance}`)
+            if("from_date" in errors.value) toast.warning(`From_date: ${errors.value.from_date}`)
+            if("end_date" in errors.value) toast.warning(`End_date: ${errors.value.end_date}`)
+            if("summary_of_activities" in errors.value) toast.warning(`Summary_of_activities: ${errors.value.summary_of_activities}`)
+            if("used_spare_parts" in errors.value) toast.warning(`Used_spare_parts: ${errors.value.used_spare_parts}`)
+            if("remarks" in errors.value) toast.warning(`Remarks: ${errors.value.remarks}`)
             onStatus.value = false
         } 
 
         onStatus.value = true
     }
     
-    const onRegister = async (newOrder: UpdateOrder,id: UUIDTypes) => {
-        console.log("estado de orden: "+newOrder.order_state)
-        if (clientStore.client.value?.access_level != AccessLevel.technical) {
+    const onRegister = async (newReport: CreateReport,id:UUIDTypes) => {
+        if (clientStore.client.value?.access_level === AccessLevel.technical_supervisor ||
+            clientStore.client.value?.access_level === AccessLevel.admin 
+        ) {
             try {
-                const response = await updateOrder(newOrder,id);
+                const response = await updateReport(newReport,id);
                 if (response) {
                     if ("statusCode" in response) {
                         if(response.statusCode === 404 ) router.replace({ name: 'NotFound' });
@@ -206,10 +405,10 @@
                         if(response.statusCode === 0 || response.statusCode === 500) router.replace({ name: 'ServerError' });
                     }
 
-                    if("id" in response) {
-                        toast.info("New registered customer")
+                    if("id_report" in response) {
+                        toast.info("Modified report record")
                         resetForm()
-                        router.replace({name: "order"})
+                        router.replace({name: "report"})
                     }
                 }
             } catch (error) {
@@ -218,4 +417,5 @@
         }
     }
 
+    
 </script>

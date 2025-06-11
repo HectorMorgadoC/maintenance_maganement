@@ -147,6 +147,12 @@ const router = createRouter({
           name: 'updateReport',
           component: () => import("../module/report/view/UpdateReport.vue"),
           beforeEnter: isAuthenticatedGuard
+        },
+        {
+          path: 'approval_report',
+          name: 'approvalReport',
+          component: () => import("../module/common/components/ApproveRegistration.vue"),
+          beforeEnter: isAuthenticatedGuard
         }
 
       ],

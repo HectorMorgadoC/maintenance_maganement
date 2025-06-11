@@ -1,24 +1,36 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import type { Order } from "../interface/orders.interface";
+import type{ Report } from "../interface/report.interface";
 
-export const useOrderItemStore = defineStore('order', () => {
+export const useReportItemStore = defineStore('report', () => {
 
-    let orderItem = ref<Order>({
-        id: "",
-        date: "",
-        description: "",
-        state: false,
-        client: "",
-        process: ""
+    let reportItem = ref<Report>({
+        id_report: "",
+        id_order: "",
+        description_fault: "",
+        order_creator: "",
+        technical: "",
+        collaborators: "",
+        team: "",
+        notice_date: "",
+        from_date: "",
+        end_date: "",
+        fault_type: "",
+        type_of_maintenance: "",
+        summary_of_activities: "",
+        used_spare_parts: "",
+        remarks: "",
+        maintenance_approval: false,
+        production_approval: false
+
     })
 
-    const setOrderItem = (order: Order) => {
-        orderItem.value = order;
+    const setReportItem = (report: Report) => {
+        reportItem.value = report;
     } 
 
     return {
-        orderItem,
-        setOrderItem
+        reportItem: reportItem,
+        setReportItem
     }
 })

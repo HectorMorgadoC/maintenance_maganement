@@ -2,33 +2,37 @@ import { managementApi } from "../../../api/managementApi";
 import { useAuthStore } from "../../auth/stores/auth.store";
 import type { MessageError } from "../../common/interface/message-error.interface";
 import { isAxiosError } from "axios";
-import type { UpdateOrder } from "../interface/updateOrder.interface";
 import type { UUIDTypes } from "uuid";
-import type { Order } from "../interface/orders.interface";
 import { AccessLevel } from "../../auth/interfaces/access-level.enum";
+import type { UpdateReport } from "../interface/updateReport.interface";
 
-export const updateOrder = async (updatedOrder: UpdateOrder,idOrder: UUIDTypes): 
-Promise< MessageError | Order > => {
+export const updateReport = async (updatedReport: UpdateReport,idReport: UUIDTypes): 
+Promise< MessageError | Report > => {
     const client = useAuthStore();
 
-    if(client.client?.access_level === AccessLevel.production_supervisor || 
+    if( 
         client.client?.access_level === AccessLevel.technical_supervisor ||
         client.client?.access_level === AccessLevel.admin
     ) {
 
     const body: any = {
-        team: updatedOrder.team,
-        client: updatedOrder.client,
-        notice_date: updatedOrder.notice_date,
-        fault_description: updatedOrder.fault_description,
-        order_state: updatedOrder.order_state
+        order: updatedReport.order,
+        client: updatedReport.client,
+        collaborators: updatedReport.collaborators,
+        fault_type: updatedReport.fault_type,
+        type_of_maintenance: updatedReport.type_of_maintenance,
+        from_date: new Date(updatedReport.from_date).toISOString(),
+        end_date: new Date(updatedReport.end_date).toISOString(),
+        summary_of_activities: updatedReport.summary_of_activities,
+        used_spare_parts: updatedReport.used_spare_parts,
+        remarks: updatedReport.remarks,
     };
 
         try {
-            let response = await managementApi.patch<Order>(`/order/${idOrder}`,body);
+            let response = await managementApi.patch<Report>(`/report/${idReport}`,body);
 
-            let order: Order = response.data
-            return order
+            let report: Report = response.data
+            return report
 
         } catch (error) {
             return {
