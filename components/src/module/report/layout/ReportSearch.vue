@@ -84,7 +84,7 @@
             <div v-if="!onStatus" >
                 <h3 class="mb-5 block text-4xl text-center font-extrabolt text-[#EEE0D3] mb-1">No hay registro</h3>
             </div>
-            <CardInfoOrder v-else 
+            <CardInfoReport v-else 
             :data_list=listReport 
             title="ordenes"
             @on-status-menu="statusMenu"
@@ -105,6 +105,7 @@ import { useToast } from 'vue-toastification';
 import ButtonCreate from '../../common/components/ButtonCreate.vue';
 import type { SubClient } from '../../auth/interfaces/subClient-interface';
 import { AccessLevel } from '../../auth/interfaces/access-level.enum';
+import CardInfoReport from '../view/CardInfoReport.vue';
 
 const clientStore = useClientStorage();
 const listTeam = ref<Team[]>([])
@@ -121,7 +122,9 @@ if(clientStore.client.value?.access_level === AccessLevel.technical ||
 
 
 if(clientStore.client.value?.clients ){
-    listClient.value = clientStore.client.value?.clients
+    clientStore.client.value?.clients.map(values => { 
+        if(values.access_level) listClient.value.push(values)
+    })
 }
 
 const ReportForm = reactive({

@@ -241,7 +241,7 @@ import type { UUIDTypes } from 'uuid';
                 }
 
                 if("username" in response) {
-                    toast.success("Updated customer record")
+                    toast.success("Registro de cliente modificado")
                     router.replace({name: "client"})
                 }
                 

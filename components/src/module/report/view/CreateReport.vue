@@ -21,7 +21,20 @@
                 />
                 <p v-if="hasOrder" class="text-[#FC3B47] text-2xl">Codigo de orden no valido </p>
             </div>
-            
+            <div class="mb-3">
+                <label 
+                    for="team" 
+                    class="block text-xl font-medium text-[#EEE0D3] my-2"
+                >
+                    Descripcion de falla
+                </label>
+                <textarea
+                    type="text"
+                    :placeholder=orderForReport.fault_description
+                    :disabled="isDisabledInput"
+                    class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
+                ></textarea>
+            </div>
             <div class="mb-3">
                 <label 
                     for="team" 
@@ -49,7 +62,7 @@
                 </label>
                 <select
                 v-model=client
-                id="team"
+                id="client"
                 :disabled="!isDisabledInput"
                 class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 >
@@ -239,6 +252,7 @@
             title="Desea realizar registro" 
             :sample_data="{
                 Equipo: teamOfOrder.name,
+                tecnico: values.client,
                 Colaboradores: values.collaborators,
                 Tipo_falla: values.fault_type,
                 Tipo_mantenimiento: values.type_of_maintenance,
@@ -272,19 +286,26 @@
     import { getOrderById } from '../action/getOrderById.action';
     import type { CreateReport } from '../interface/createReport.interface';
     import { registerReport } from '../action/registerReport.action';
+    import type { OrderForReport } from '../interface/orderForResport.interface';
 
 
 
     const clientStore = useClientStorage();
     const listTeam = ref<Team[]>([])
     const listClient = ref<SubClient[]>([]);
-    const orderForReport = ref({})
+    const orderForReport = ref<OrderForReport>({
+        id: "",
+        team: "",
+        client: "",
+        fault_description:""
+    })
     const hasOrder = ref<boolean>(false);
     const isDisabledInput = ref<boolean>(false);
     const teamOfOrder = ref({
         id: "",
         name: ""
     })
+
     const typeOfMaintenance = TypeOfMaintenance
     const faultType = FaulType;
     const toast = useToast();
@@ -353,7 +374,6 @@
         
     })
     const onStatus = ref<boolean>(false)
-    
     const registerInfo = () => {
         if(errors) {
             if("team" in errors.value) toast.warning(`Team: ${errors.value.team}`)
@@ -413,7 +433,8 @@
                     orderForReport.value = {
                         id: response.id,
                         team: response.team,
-                        client: response.client
+                        client: response.client,
+                        fault_description: response.fault_description
                     }
                     listTeam.value.map(t => { 
                         if( t.id === response.team ) {

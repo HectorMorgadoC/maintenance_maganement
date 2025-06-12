@@ -4,12 +4,7 @@ import { AccessLevel } from "../../auth/interfaces/access-level.enum";
 import type { MessageError } from "../../common/interface/message-error.interface";
 import { isAxiosError } from "axios";
 import type { UUIDTypes } from "uuid";
-
-interface OrderForReport {
-    id: UUIDTypes,
-    team: UUIDTypes,
-    client: UUIDTypes
-}
+import type { OrderForReport } from "../interface/orderForResport.interface";
 
 
 export const getOrderById = async (id: UUIDTypes): 

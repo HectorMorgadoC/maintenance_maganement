@@ -54,12 +54,8 @@ const emit = defineEmits(["onStatusMenu"])
 const selectedItem = ref<any>({});
 const isEditMode = ref<Boolean>(false);
 const actionPanelTitle = ref<string>('');
-
-
 const colorTextCulminated = ref<string>("text-[#EEE0D3]")
 const colorBackgroundCardCulminated = ref<string>("bg-[#3d3b46]")
-
-
 
 const progresTraslate = (item: OrderState) => {
     if(item === OrderState.Esperando) return "Esperando" 
@@ -71,11 +67,8 @@ const progresTraslate = (item: OrderState) => {
     }
 }
 
-
 const selectItem = (item: Order) => {
-    if(client.client.value?.access_level === AccessLevel.operator || client.client.value?.access_level === AccessLevel.technical ) {
-        toast.warning("Client not authorized to perform operation")
-    } else {
+    if(client.client.value?.access_level !== AccessLevel.operator && client.client.value?.access_level !== AccessLevel.technical ) {
         selectedItem.value = item;
         actionPanelTitle.value = `Orden: ${selectedItem.value.id}`;
         isEditMode.value = true;
@@ -84,6 +77,5 @@ const selectItem = (item: Order) => {
     }
     
 }
-
 
 </script>

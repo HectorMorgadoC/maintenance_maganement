@@ -166,14 +166,15 @@
     const { value: notice_date } = useField<string>('notice_date')
     const { value: fault_description } = useField<string>('fault_description')
     
-    if(clientStore.client.value?.access_level != AccessLevel.operator && clientStore.client.value?.clients ){
-            listClient.value = clientStore.client.value?.clients
-    } else {
-        listClient.value.push({
-        id: clientStore.client.value?.id || "",
-        username: clientStore.client.value?.username || ""
-    })
-}
+    ///if(clientStore.client.value?.access_level != AccessLevel.operator && clientStore.client.value?.clients ){
+    ///        listClient.value = clientStore.client.value?.clients
+    ///} else {
+    ///    listClient.value.push({
+    ///    id: clientStore.client.value?.id || "",
+    ///    username: clientStore.client.value?.username || ""
+    ///})
+    ///}
+
     const onStatus = ref<boolean>(false)
     
     const registerInfo = () => {
@@ -236,8 +237,26 @@
             } 
         })
 
-
         hasClient.value = true
-    }
+    } else if (listClient.value.length > 0 ) {
+        for (let client of listClient.value) {
+            if( client.id === clientStore.client.value?.id){
+                return
+            } else {
+                listClient.value.push({
+                    id: clientStore.client.value?.id || "",
+                    username: clientStore.client.value?.username || ""
+                }) 
+                hasClient.value = true
+            }
+        }
+} else {
+    listClient.value.push({
+                    id: clientStore.client.value?.id || "",
+                    username: clientStore.client.value?.username || ""
+                }) 
+                hasClient.value = true
+}
+
     })
 </script>
