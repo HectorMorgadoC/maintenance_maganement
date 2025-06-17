@@ -49,7 +49,7 @@
         />
         <CardMain
         v-if="accessLevel != AccessLevel.operator"
-        title="Resportes de mantenimiento" 
+        title="Reportes de mantenimiento" 
         message="Los reportes de mantenimiento son documentos generados a partir de las órdenes de trabajo (OT) 
         ejecutadas, y su función principal es dejar constancia de todas las actividades realizadas, los resultados 
         obtenidos y las condiciones en que quedaron los equipos intervenidos. Estos reportes son fundamentales para 
