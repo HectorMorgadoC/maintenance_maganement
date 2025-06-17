@@ -1,14 +1,10 @@
 <template>
     <div v-if="!isEditMode" class="flex gap-[25px] flex-wrap justify-center items-stretch content-center list-none mt-10">
         <li 
-        v-for="item of props.data_list" 
+        v-for="item of listOrderView" 
         :key="item.id"
         >
-        <ul  :class="[
-    'w-full max-w-lg flex flex-col justify-start items-start p-8 text-1xl text-[#EEE0D3] bg-[#3d3b46] hover:bg-[#575463] overflow-hidden break-words sm:w-screen p-8 h-full min-h-[200px]',
-    colorBackgroundCardCulminated,
-    colorTextCulminated
-    ]">
+        <ul class="w-full max-w-lg flex flex-col justify-start items-start p-8 text-1xl text-[#EEE0D3] bg-[#3d3b46] hover:bg-[#575463] overflow-hidden break-words sm:w-screen p-8 h-full min-h-[200px] ">
             <button @click="selectItem(item)">
                 <div class="my-2 pl-2 text-justify">
                     <span class="font-medium text-[#FC3B47]">Numero de orden: </span> 
@@ -60,37 +56,34 @@ import type { Order } from '../interface/orders.interface';
 import { useOrderItemStore } from '../stores/order.store';
 import { useClientStorage } from '../../auth/composable/useClientStorage';
 import { AccessLevel } from '../../auth/interfaces/access-level.enum';
-import { useToast } from 'vue-toastification';
 import { OrderState } from '../interface/orderState.interface';
 
 const client = useClientStorage()
 const orderStore = useOrderItemStore()
-const toast = useToast()
 
 const props = defineProps<{
     data_list: Order[]
 }>()
 
+const listOrderView = ref<Order[]>([])
+
+if ( client.client.value?.access_level !== AccessLevel.admin ) {
+    props.data_list.map( value => {
+        if(value.state != OrderState.Culminado) listOrderView.value.push(value);
+    })
+} else {
+    listOrderView.value = props.data_list;
+}
+
 const emit = defineEmits(["onStatusMenu"])
 const selectedItem = ref<any>({});
 const isEditMode = ref<Boolean>(false);
 const actionPanelTitle = ref<string>('');
-const colorTextCulminated = ref<string>("text-[#EEE0D3]")
-const colorBackgroundCardCulminated = ref<string>("bg-[#3d3b46]")
 
 const progresTraslate = (item: OrderState) => {
     if(item === OrderState.Esperando) return "Esperando" 
-    if(item === OrderState.Progresando) {
-        colorTextCulminated.value = "text-[#dbc69b]"
-        colorBackgroundCardCulminated.value = "bg-[#274641]"
-        return"Progresando"
-    }
-    if(item === OrderState.Culminado) { 
-        colorTextCulminated.value = "text-[#dbc69b]"
-        colorBackgroundCardCulminated.value = "bg-[#4A3B34]"
-        return "Culminado"
-    }
-
+    if(item === OrderState.Progresando) return"Progresando"
+    if(item === OrderState.Culminado) return "Culminado"
 }
 
 const selectItem = (item: Order) => {

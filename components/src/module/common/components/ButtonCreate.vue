@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-center w- gap-4 my-8 lg:flex-row lg:justify-between">
+    <div class="flex flex-col items-center gap-4 mb-8 lg:flex-row lg:justify-between">
         <div class="">
             <p class="text-[#EEE0D3] text-3xl lg:ml-20">{{ title }}</p>
         </div>

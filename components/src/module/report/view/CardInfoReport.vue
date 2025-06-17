@@ -4,11 +4,7 @@
         v-for="item of props.data_list"
         :key=item.id_report
         >
-            <ul :class="[
-    'w-full max-w-lg flex flex-col justify-start items-start p-8 text-1xl text-[#EEE0D3] bg-[#3d3b46] hover:bg-[#575463] overflow-hidden break-words sm:w-screen p-8 h-full min-h-[600px]',
-    colorBackgroundCardCulminated,
-    colorTextCulminated
-    ]">
+            <ul class="w-full max-w-lg flex flex-col justify-start items-start p-8 text-1xl text-[#EEE0D3] bg-[#3d3b46] hover:bg-[#575463] overflow-hidden break-words sm:w-screen p-8 h-full min-h-[600px]">
                 <button @click="selectItem(item)">
                     <div class="my-2 pl-2 text-justify">
                         <span class="font-medium text-[#FC3B47]">Numero de reporte: </span> 
@@ -101,7 +97,6 @@ import type { Report } from '../interface/report.interface'
 
 const client = useClientStorage()
 const reportStore = useReportItemStore()
-const colorAproval = ref<[boolean,boolean]>([false,false])
 const stateAprovalProduction = ref<boolean>(true)
 
 const props = defineProps<{
@@ -113,39 +108,38 @@ const selectedItem = ref<any>({});
 const isEditMode = ref<Boolean>(false);
 const actionPanelTitle = ref<string>('');
 
-const colorTextCulminated = ref<string>("text-[#EEE0D3]")
-const colorBackgroundCardCulminated = ref<string>("bg-[#3d3b46]")
 
-const colorBackgroundSelectAproval = () => {
-    if(colorAproval.value[0] && colorAproval.value[1]) {
-        colorTextCulminated.value = "text-[#dbc69b]"
-        colorBackgroundCardCulminated.value = "bg-[#4A3B34]"
-    }
-}
-    
 
-const selectItem = (item: any) => {
+
+const selectItem = (item: Report) => {
     if(client.client.value?.access_level !== AccessLevel.operator && 
         client.client.value?.access_level !== AccessLevel.production_supervisor &&
         client.client.value?.access_level !== AccessLevel.technical
         ) {
-        selectedItem.value = item;
-        actionPanelTitle.value = `Report: ${selectedItem.value.id_report}`;
-        isEditMode.value = true;
-        reportStore.setReportItem(item)
-        emit("onStatusMenu",isEditMode.value);
+            if(item.maintenance_approval  && item.production_approval) {
+                isEditMode.value = false;
+            } else {
+                selectedItem.value = item;
+                actionPanelTitle.value = `Report: ${selectedItem.value.id_report}`;
+                isEditMode.value = true;
+                reportStore.setReportItem(item)
+                emit("onStatusMenu",isEditMode.value);
+            }
+        
     } else if(client.client.value?.access_level === AccessLevel.production_supervisor ) {
-        selectedItem.value = item;
-        actionPanelTitle.value = `Report: ${selectedItem.value.id_report}`;
-        isEditMode.value = true;
-        reportStore.setReportItem(item)
-        emit("onStatusMenu",isEditMode.value);
-        stateAprovalProduction.value = false
-
+        if(item.maintenance_approval  && item.production_approval) {
+            isEditMode.value = false;
+        } else {
+            selectedItem.value = item;
+            actionPanelTitle.value = `Report: ${selectedItem.value.id_report}`;
+            isEditMode.value = true;
+            reportStore.setReportItem(item)
+            emit("onStatusMenu",isEditMode.value);
+            stateAprovalProduction.value = false
+        }
     }
-
-    
 }
+
 
 const traslateStatusReport = (isStatus: boolean) => {
     if(isStatus) {

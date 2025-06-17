@@ -1,4 +1,12 @@
 <template>
+    <div class="flex flex-col items-center w- gap-4 mb-8 lg:flex-row lg:justify-between">
+        <div class="">
+            
+        </div>
+        <div class="bg-[#FC3B47] text-[#EEE0D3] text-xl py-4 px-5 lg:mr-20 font-semibold hover:bg-[#F2564F] transition">
+            <RouterLink to="/">salir</RouterLink>
+        </div>
+    </div>
     <div class="flex gap-[20px] flex-wrap justify-center items-center content-center">
         <CardMain 
             v-if="accessLevel === AccessLevel.admin" 

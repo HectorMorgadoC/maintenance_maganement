@@ -17,6 +17,7 @@
                     id="order"
                     name="order"
                     placeholder="Ingrese orden de trabajo"
+                    required
                     class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 />
                 <p v-if="hasOrder" class="text-[#FC3B47] text-2xl">Codigo de orden no valido </p>
@@ -32,6 +33,7 @@
                     type="text"
                     :placeholder=orderForReport.fault_description
                     :disabled="isDisabledInput"
+                    required
                     class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 ></textarea>
             </div>
@@ -49,6 +51,7 @@
                     name="team"
                     :placeholder=teamOfOrder.name
                     :disabled="isDisabledInput"
+                    required
                     class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 />
             </div>
@@ -64,6 +67,7 @@
                 v-model=client
                 id="client"
                 :disabled="!isDisabledInput"
+                required
                 class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 >
                     <option disabled value="">Seleccione un cliente</option>
@@ -106,6 +110,7 @@
                 v-model=fault_type
                 id="faul_type"
                 :disabled="!isDisabledInput"
+                required
                 class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 >
                     <option disabled value="">Seleccione el tipo de falla</option>
@@ -129,6 +134,7 @@
                 v-model=type_of_maintenance
                 id="typeOfMaintenance"
                 :disabled="!isDisabledInput"
+                required
                 class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 >
                     <option disabled value="">Seleccione el tipo de mantenimiento</option>
@@ -155,6 +161,7 @@
                     id="from_date"
                     name="from_date"
                     placeholder="Ingrese la fecha de inicio"
+                    required
                     class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 />
             </div>
@@ -173,6 +180,7 @@
                     id="end_date"
                     name="end_date"
                     placeholder="Ingrese la fecha de culminacion"
+                    required
                     class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 />
             </div>
@@ -211,7 +219,6 @@
                     type="text"
                     id="used_spare_parts"
                     name="used_spare_parts"
-                    required
                     placeholder="Ingrese los respuestos usados"
                     class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                     rows="3"
@@ -232,7 +239,6 @@
                     type="text"
                     id="remarks"
                     name="remarks"
-                    required
                     placeholder="Ingrese comentarios adicionales"
                     class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                     rows="3"
@@ -240,7 +246,6 @@
                     ></textarea>
             </div>
             <button
-                @click="registerInfo"
                 type="submit"
                 class="w-full bg-[#FC3B47] text-xl text-[#EEE0D3] py-3 mt-4 font-semibold hover:bg-[#F2564F] transition"
             >

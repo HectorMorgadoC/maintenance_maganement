@@ -14,6 +14,7 @@
                 <select
                 v-model=team
                 id="team"
+                required
                 class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 >
                     <option disabled value="">Seleccione un equipo</option>
@@ -36,8 +37,9 @@
                 </label>
                 <select
                 v-model=client
-                id="team"
+                id="client"
                 :disabled="!hasClient"
+                required
                 class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 >
                     <option disabled value="">Seleccione un cliente</option>
@@ -45,6 +47,7 @@
                     v-for="(client, index) in listClient"
                     :key="index"
                     :value="client.id"
+
                     >
                         {{ client.username }}</option>
                     
@@ -64,6 +67,7 @@
                     id="notice_date"
                     name="notice_date"
                     placeholder="Ingrese la fecha de aviso"
+                    required
                     class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 />
             </div>
@@ -86,7 +90,7 @@
                 />
             </div>
             <button
-                @click="registerInfo"
+                
                 type="submit"
                 class="w-full bg-[#FC3B47] text-xl text-[#EEE0D3] py-3 mt-4 font-semibold hover:bg-[#F2564F] transition"
             >
@@ -166,19 +170,14 @@
     const { value: notice_date } = useField<string>('notice_date')
     const { value: fault_description } = useField<string>('fault_description')
     
-    ///if(clientStore.client.value?.access_level != AccessLevel.operator && clientStore.client.value?.clients ){
-    ///        listClient.value = clientStore.client.value?.clients
-    ///} else {
-    ///    listClient.value.push({
-    ///    id: clientStore.client.value?.id || "",
-    ///    username: clientStore.client.value?.username || ""
-    ///})
-    ///}
 
     const onStatus = ref<boolean>(false)
     const dateConfirmationView = ref<string>("");
 
     const registerInfo = () => {
+
+        
+
         if(errors) {
             if("team" in errors.value) toast.warning(`Team: ${errors.value.team}`)
             if("client" in errors.value) toast.warning(`Client: ${errors.value.client}`)
@@ -187,7 +186,7 @@
             onStatus.value = false
         } 
 
-        onStatus.value = true
+        values.client.length <= 0 ? onStatus.value = false : onStatus.value = true
     }
     
     const onRegister = async (newOrder: CreateOrder) => {

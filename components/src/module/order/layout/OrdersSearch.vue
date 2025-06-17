@@ -1,5 +1,5 @@
 <template>
-    <ButtonCreate title="Ordenes" title_button="Crear orden" patch="createOrder"/>
+    <ButtonCreate title="Ordenes" title_button="Crear orden" patch="createOrder" v-if="hasCreateOrder"/>
     <div class="flex flex-col justify-center items-center min-h-screen">
         <div v-if="!onMenu">
             <form @submit.prevent="getListOrder" class="w-full max-w-md bg-[#3d3b46] p-6 sm:p-8 md:p-10 shadow-md">
@@ -8,15 +8,15 @@
             >Busqueda de ordenes de trabajo</h3>
             <div class="mb-3">
                 <label 
-                    for="client" 
+                    for="team" 
                     class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
                     Equipo
                 </label>
                 <select
                 v-model="OrderForm.team"
-                name="process" 
-                id="process"
+                name="team" 
+                id="team"
                 class="placeholder-gray-400 w-full text-xl px-4 py-3 text-[#F3ECDE] border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#F2564F]"
                 >
                     <option disabled value="">Seleccione un equipo</option>
@@ -32,7 +32,7 @@
 
             <div class="mb-3">
                 <label 
-                    for="lastname" 
+                    for="client" 
                     class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
                     Cliente
@@ -56,7 +56,7 @@
 
             <div class="mb-3">
                 <label 
-                    for="city" 
+                    for="date" 
                     class="block text-xl font-medium text-[#EEE0D3] my-2"
                 >
                     Fecha de creacion
@@ -133,6 +133,11 @@ const clientStore = useClientStorage();
 const listTeam = ref<Team[]>([])
 const listClient = ref<SubClient[]>([]);
 const isStateOrder = ref<boolean>(false)
+const hasCreateOrder = ref<boolean>(false)
+
+if (clientStore.client.value?.access_level !== AccessLevel.technical){
+    hasCreateOrder.value = true
+}
 
 const toast = useToast()
 listTeam.value = clientStore.client.value?.teams || []
