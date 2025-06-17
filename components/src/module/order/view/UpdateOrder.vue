@@ -126,7 +126,7 @@
                     fault_description: values.description,
                     order_state: values.state,
                     observation: values.observation
-                }, currentOrder.id as UUIDTypes)"
+                }, currentOrder.id)"
                 type="submit"
                 class="w-full bg-[#FC3B47] text-xl text-[#EEE0D3] py-3 mt-4 font-semibold hover:bg-[#F2564F] transition"
             >
@@ -223,7 +223,7 @@
         onStatus.value = true
     }
     
-    const onRegister = async (newOrder: UpdateOrder,id: UUIDTypes) => {
+    const onRegister = async (newOrder: UpdateOrder,id: string) => {
         if (clientStore.client.value?.access_level != AccessLevel.technical) {
             try {
                 const response = await updateOrder(newOrder,id);

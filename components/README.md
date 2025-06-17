@@ -15,4 +15,5 @@ Learn more about the recommended Project Setup and IDE Support in the [Vue Docs 
 - #1D1B1C fondo
 - #EEE0D3 texto
 - #4A3B34 fondo secundario
+- #274641 fondo de en proceso
 - #98B6B6 hover

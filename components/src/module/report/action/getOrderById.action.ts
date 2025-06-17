@@ -3,11 +3,10 @@ import { useClientStorage } from "../../auth/composable/useClientStorage";
 import { AccessLevel } from "../../auth/interfaces/access-level.enum";
 import type { MessageError } from "../../common/interface/message-error.interface";
 import { isAxiosError } from "axios";
-import type { UUIDTypes } from "uuid";
 import type { OrderForReport } from "../interface/orderForResport.interface";
 
 
-export const getOrderById = async (id: UUIDTypes): 
+export const getOrderById = async (id: string): 
 Promise< MessageError | OrderForReport > => {
     const clientStorage = useClientStorage()
     if( clientStorage.client.value?.access_level === AccessLevel.admin || 

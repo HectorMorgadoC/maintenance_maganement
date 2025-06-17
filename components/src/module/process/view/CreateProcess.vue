@@ -72,7 +72,7 @@
     import { registerProcess } from '../action/registerProcess.action';
     import router from '../../../router';
     import type { CreateProcess } from '../interface/createProcess.interface';
-import { updateListProcess } from '../action/updateListProcess';
+    import { updateListProcess } from '../action/updateListProcess';
 
     const toast = useToast();
 
@@ -152,7 +152,7 @@ import { updateListProcess } from '../action/updateListProcess';
 
                 if("name" in response) {
                     await updateListProcess()
-                    toast.info("New registered customer")
+                    toast.info("Nuevo proceso registrado")
                     resetForm()
                     onStatus.value = false
                 }

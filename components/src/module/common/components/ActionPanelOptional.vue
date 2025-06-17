@@ -4,13 +4,14 @@
             <h3 class="block text-3xl font-medium text-[#F3ECDE] mb-1 pb-3">{{ props.title }}</h3>
             <div class="flex flex-rows items-center ">
                 <button
+                    v-if="state_aproval_production"
                     @click="routeUpdate"
                     class="w-full max-w-md bg-[#FC3B47] text-xl text-[#EEE0D3] p-4 m-5 font-semibold hover:bg-[#F2564F] transition"> Modificar </button>
                 <button
                     @click="routeApproval"
                     class="w-full max-w-md bg-[#FC3B47] text-xl text-[#EEE0D3] p-4 m-5 font-semibold hover:bg-[#F2564F] transition"> Aprobar </button>
                 <button 
-                    v-if="!state_router_delete"
+                    v-if="state_router_delete && state_aproval_production"
                     @click="routeDelete"
                     class="w-full max-w-md bg-[#FC3B47] text-xl text-[#EEE0D3] p-4 m-5 font-semibold hover:bg-[#F2564F] transition">Eliminar</button>
             </div>
@@ -28,6 +29,7 @@ const props = defineProps<{
     router_delete: string
     router_approval: string
     state_router_delete: boolean
+    state_aproval_production: boolean
 }>()
 
 let isEditMode = ref<Boolean>(false);

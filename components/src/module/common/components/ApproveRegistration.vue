@@ -30,13 +30,16 @@
         
         <div class="p-8 text-2xl text-[#F3ECDE] bg-[#3d3b46] hover:bg-[#575463] overflow-hidden break-words mx-10 my-5">
                 <p  class="text-[#EEE0D3] text-justify font-medium text-2xl py-1">
-                    {{ currentReport.reportItem.id_report }}
+                    <span class="font-medium text-[#FC3B47]">Numero de reporte: </span> 
+                    <span class="break-all">{{ currentReport.reportItem.id_report }}</span>
                 </p>
                 <p  class="text-[#EEE0D3] text-justify font-medium text-2xl py-1">
-                    {{ currentReport.reportItem.team }}
+                    <span class="font-medium text-[#FC3B47]">Equipo: </span> 
+                    <span class="break-all">{{ currentReport.reportItem.team}}</span>
                 </p>
                 <p  class="text-[#EEE0D3] text-justify font-medium text-2xl py-1">
-                    {{ currentReport.reportItem.technical }}
+                    <span class="font-medium text-[#FC3B47]">Tecnico: </span> 
+                    <span class="break-all">{{ currentReport.reportItem.technical }}</span>
                 </p>
         </div>
     </div>
@@ -97,7 +100,7 @@ const registerAppropriation = async () => {
                     }
 
                     if("production_approval" in response) {
-                        toast.info("Report approved by production")
+                        toast.info("Reporte aprobado por produccion")
                         router.replace({name: "report"})
                     }
                 }
@@ -125,7 +128,7 @@ const registerAppropriation = async () => {
                     }
 
                     if("maintenance_approval" in response) {
-                        toast.info("Report approved by maintenance")
+                        toast.info("Reporte aprobado por mantenimiento")
                         router.replace({name: "report"})
                     }
                 }

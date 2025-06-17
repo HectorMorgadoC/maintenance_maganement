@@ -2,12 +2,11 @@ import { managementApi } from "../../../api/managementApi";
 import { useAuthStore } from "../../auth/stores/auth.store";
 import type { MessageError } from "../../common/interface/message-error.interface";
 import { isAxiosError } from "axios";
-import type { UUIDTypes } from "uuid";
 import type { StatusCode } from "../../common/interface/status-code.interface";
 import type { Order } from "../interface/orders.interface";
 import { AccessLevel } from "../../auth/interfaces/access-level.enum";
 
-export const deleteOrder = async (order_id: UUIDTypes): 
+export const deleteOrder = async (order_id: string): 
 
 Promise< MessageError | StatusCode > => {
     const client = useAuthStore();

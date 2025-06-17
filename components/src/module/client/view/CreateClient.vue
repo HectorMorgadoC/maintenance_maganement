@@ -248,7 +248,7 @@
                 }
 
                 if("username" in response) {
-                    toast.info("New registered customer")
+                    toast.success("Nuevo cliente registrado con exito")
                     resetForm()
                     onStatus.value = false
                 }

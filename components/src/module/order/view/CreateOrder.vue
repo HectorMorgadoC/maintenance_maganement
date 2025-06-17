@@ -103,7 +103,7 @@
                 Cliente: listClient?.find(( c ) => {
                     return c.id === values.client
                 })?.username,
-                Fecha_de_aviso: values.notice_date,
+                Fecha_de_aviso: dateConfirmationView,
                 Descripcion: values.fault_description
                 }"
             :data="values"
@@ -176,7 +176,8 @@
     ///}
 
     const onStatus = ref<boolean>(false)
-    
+    const dateConfirmationView = ref<string>("");
+
     const registerInfo = () => {
         if(errors) {
             if("team" in errors.value) toast.warning(`Team: ${errors.value.team}`)
@@ -259,4 +260,10 @@
 }
 
     })
+
+    watch(notice_date,(newNoticeDate) => {
+    dateConfirmationView.value = newNoticeDate.replace("T","-")
+    }) 
+
+    
 </script>

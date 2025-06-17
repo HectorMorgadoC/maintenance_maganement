@@ -1,22 +1,43 @@
 <template>
-    <div v-if="!isEditMode" class="flex gap-[25px] flex-wrap justify-center items-center content-center list-none mt-10">
+    <div v-if="!isEditMode" class="flex gap-[25px] flex-wrap justify-center items-stretch content-center list-none mt-10">
         <li 
         v-for="item of props.data_list" 
         :key="item.id"
         >
         <ul  :class="[
-    'w-full max-w-xl flex flex-col justify-center items-start p-8 text-3xl hover:bg-[#575463] overflow-hidden break-words sm:w-screen',
+    'w-full max-w-lg flex flex-col justify-start items-start p-8 text-1xl text-[#EEE0D3] bg-[#3d3b46] hover:bg-[#575463] overflow-hidden break-words sm:w-screen p-8 h-full min-h-[200px]',
     colorBackgroundCardCulminated,
     colorTextCulminated
     ]">
             <button @click="selectItem(item)">
-                <p class="my-2 pl-2 text-justify"> Id: {{ item.id }}</p>
-                <p class="my-2 pl-2 text-justify"> Fecha de creacion: {{ item.date.slice(0,10) }}</p>
-                <p class="my-2 pl-2 text-justify"> Descripcion: {{ item.description }}</p>
-                <p class="my-2 pl-2 text-justify"> Progreso: {{ progresTraslate(item.state) }}</p>
-                <p class="my-2 pl-2 text-justify"> Creador: {{ item.client }}</p>
-                <p class="my-2 pl-2 text-justify"> Equipo: {{ item.team }}</p>
-                <p class="my-2 pl-2 text-justify"> Observacion: {{ item.observation }}</p>
+                <div class="my-2 pl-2 text-justify">
+                    <span class="font-medium text-[#FC3B47]">Numero de orden: </span> 
+                    <span class="break-all">{{ item.id }}</span>
+                </div>
+                <div class="my-2 pl-2 text-justify">
+                    <span class="font-medium text-[#FC3B47]">Fecha de creacion: </span> 
+                    <span class="break-all">{{ item.date.slice(0,10) }}</span>
+                </div>
+                <div class="my-2 pl-2 text-justify">
+                    <span class="font-medium text-[#FC3B47]">Descripcion: </span> 
+                    <span class="break-all">{{ item.description }}</span>
+                </div>
+                <div class="my-2 pl-2 text-justify">
+                    <span class="font-medium text-[#FC3B47]">Progreso: </span> 
+                    <span class="break-all">{{ progresTraslate(item.state) }}</span>
+                </div>
+                <div class="my-2 pl-2 text-justify">
+                    <span class="font-medium text-[#FC3B47]">Creador: </span> 
+                    <span class="break-all">{{ item.client }}</span>
+                </div>
+                <div class="my-2 pl-2 text-justify">
+                    <span class="font-medium text-[#FC3B47]">Equipo: </span> 
+                    <span class="break-all">{{ item.team }}</span>
+                </div>
+                <div class="my-2 pl-2 text-justify">
+                    <span class="font-medium text-[#FC3B47]">Observacion: </span> 
+                    <span class="break-all">{{ item.observation }}</span>
+                </div>
             </button>
         </ul>
     </li>
@@ -59,12 +80,17 @@ const colorBackgroundCardCulminated = ref<string>("bg-[#3d3b46]")
 
 const progresTraslate = (item: OrderState) => {
     if(item === OrderState.Esperando) return "Esperando" 
-    if(item === OrderState.Progresando) return"Progresando"
+    if(item === OrderState.Progresando) {
+        colorTextCulminated.value = "text-[#dbc69b]"
+        colorBackgroundCardCulminated.value = "bg-[#274641]"
+        return"Progresando"
+    }
     if(item === OrderState.Culminado) { 
         colorTextCulminated.value = "text-[#dbc69b]"
         colorBackgroundCardCulminated.value = "bg-[#4A3B34]"
         return "Culminado"
     }
+
 }
 
 const selectItem = (item: Order) => {

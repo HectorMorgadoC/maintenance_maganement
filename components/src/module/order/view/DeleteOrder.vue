@@ -1,13 +1,25 @@
 <template>
     <div class="fixed inset-0 flex items-center justify-center">
         <div class="w-11/12 max-w-md bg-[#3d3b46] p-6 ">
-            <h3 class="text-3xl font-medium text-[#F3ECDE] my-4 pb-2 text-center">{{ orderStore.orderItem.id.slice(0,6) }}</h3>
+            <h3 class="text-3xl font-medium text-[#F3ECDE] my-4 pb-2 text-center">{{ orderStore.orderItem.id}}</h3>
             
-            <div class="w-full text-[#EEE0D3] text-justify text-2xl mb-6">
-                <p class="my-2 pl-2 text-justify"> Id: {{ orderStore.orderItem.id }}</p>
-                <p class="my-2 pl-2 text-justify"> Descripcion: {{ orderStore.orderItem.description }}</p>
-                <p class="my-2 pl-2 text-justify"> Creador: {{ orderStore.orderItem.client }}</p>
-                <p class="my-2 pl-2 text-justify"> Equipo: {{ orderStore.orderItem.team }}</p>
+            <div class="w-full text-[#EEE0D3] text-justify text-1xl mb-6">
+                <div class="my-2 pl-2 text-justify">
+                    <span class="font-medium text-[#FC3B47]">Numero de orden: </span> 
+                    <span class="break-all">{{ orderStore.orderItem.id }}</span>
+                </div>
+                <div class="my-2 pl-2 text-justify"> 
+                    <span class="font-medium text-[#FC3B47]">Descripcion: </span> 
+                    <span class="break-all">{{ orderStore.orderItem.description }}</span>
+                </div>
+                <div class="my-2 pl-2 text-justify">
+                    <span class="font-medium text-[#FC3B47]">Creador: </span> 
+                    <span class="break-all">{{ orderStore.orderItem.client }}</span>
+                </div>
+                <div class="my-2 pl-2 text-justify">
+                    <span class="font-medium text-[#FC3B47]">Equipo: </span> 
+                    <span class="break-all">{{ orderStore.orderItem.team }}</span>
+                </div>
             </div>
 
             <div class="flex justify-center gap-4">
@@ -29,7 +41,6 @@
 </template>
 
 <script setup lang="ts">
-import type { UUIDTypes } from 'uuid';
 import router from '../../../router';
 import { useToast } from 'vue-toastification';
 import { useOrderItemStore } from '../stores/order.store';
@@ -43,7 +54,7 @@ const toast = useToast()
 
 const deleteOrderForId = async() => {
     try {
-        const response = await deleteOrder(orderId as UUIDTypes);
+        const response = await deleteOrder(orderId);
 
         if("code" in response) {
             if(response.code === 200) {

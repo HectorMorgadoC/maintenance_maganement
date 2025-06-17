@@ -252,7 +252,7 @@
             title="Desea realizar registro" 
             :sample_data="{
                 Equipo: teamOfOrder.name,
-                tecnico: values.client,
+                tecnico: userNameClient,
                 Colaboradores: values.collaborators,
                 Tipo_falla: values.fault_type,
                 Tipo_mantenimiento: values.type_of_maintenance,
@@ -374,6 +374,9 @@
         
     })
     const onStatus = ref<boolean>(false)
+
+    const userNameClient = ref<string>("");
+
     const registerInfo = () => {
         if(errors) {
             if("team" in errors.value) toast.warning(`Team: ${errors.value.team}`)
@@ -383,6 +386,10 @@
             onStatus.value = false
         } 
 
+        listClient.value.map( value => {
+            if(value.id as string === values.client as string) 
+                userNameClient.value = value.username
+            });
         onStatus.value = true
     }
     
@@ -424,7 +431,7 @@
     }
 
     watch(order, async (idOrder) => {
-        if(order.value.length >= 36) {
+        if(order.value.length >= 12) {
             try {
                 const response = await getOrderById(idOrder);
                 if("id" in response) {

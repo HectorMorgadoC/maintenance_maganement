@@ -1,12 +1,12 @@
 <template>
-    <div v-if="!onStatus" class="fixed inset-0 flex items-center px-5 justify-center">
-        <div class="w-11/12 max-w-md bg-[#3d3b46] p-6 ">
+    <div v-if="!onStatus" class="">
+        <div class="w-full max-w-md bg-[#3d3b46] p-8 ">
             <h3 class="block text-3xl font-medium text-[#F3ECDE] mx-5 my-2 pb-3">{{ props.title }}</h3>
             
-            <div class="w-full text-2xl text-[#F3ECDE] mb-6 mx-5">
-                <p v-for="[key, value] in Object.entries(sample_data)" :key="key" class="my-2 pl-2 text-justify">
-                    {{ key }}: {{ value }}
-                </p>
+            <div class="my-2 pl-2 text-justify">
+                <div v-for="[key, value] in Object.entries(sample_data)" :key="key" class="my-2 text-[#EEE0D3] text-justify">
+                    <span class="font-medium text-[#FC3B47]">{{ key }}:</span> <span class="break-all">{{ value }}</span>
+                </div>
             </div>
 
             <div class="flex justify-center gap-4">

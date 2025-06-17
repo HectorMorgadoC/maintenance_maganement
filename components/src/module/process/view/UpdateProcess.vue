@@ -133,11 +133,8 @@
         try {
             const response = await updateProcess(updatedProcess,idProcess);
             
-            console.log(response)
             if (response) {
-            
                 if ("statusCode" in response) {
-                    console.log(response.statusCode)
                     if(response.statusCode === 404 ) {
                         router.replace({ name: 'NotFound' });
                         return false
@@ -163,7 +160,7 @@
 
                 if("name" in response) {
                     await updateListProcess();
-                    toast.success("Updated customer record")
+                    toast.success("Registro de proceso modificado")
                     router.replace({name: "process"})
                 }
                 

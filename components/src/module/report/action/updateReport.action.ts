@@ -2,11 +2,10 @@ import { managementApi } from "../../../api/managementApi";
 import { useAuthStore } from "../../auth/stores/auth.store";
 import type { MessageError } from "../../common/interface/message-error.interface";
 import { isAxiosError } from "axios";
-import type { UUIDTypes } from "uuid";
 import { AccessLevel } from "../../auth/interfaces/access-level.enum";
 import type { UpdateReport } from "../interface/updateReport.interface";
 
-export const updateReport = async (updatedReport: UpdateReport,idReport: UUIDTypes): 
+export const updateReport = async (updatedReport: UpdateReport,idReport: string): 
 Promise< MessageError | Report > => {
     const client = useAuthStore();
 

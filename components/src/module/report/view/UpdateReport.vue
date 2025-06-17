@@ -386,7 +386,7 @@
         onStatus.value = true
     }
     
-    const onRegister = async (newReport: CreateReport,id:UUIDTypes) => {
+    const onRegister = async (newReport: CreateReport,id:string) => {
         if (clientStore.client.value?.access_level === AccessLevel.technical_supervisor ||
             clientStore.client.value?.access_level === AccessLevel.admin 
         ) {
@@ -406,7 +406,7 @@
                     }
 
                     if("id_report" in response) {
-                        toast.info("Modified report record")
+                        toast.success("Registro de reporte modificado")
                         resetForm()
                         router.replace({name: "report"})
                     }

@@ -117,7 +117,8 @@ listTeam.value = clientStore.client.value?.teams || []
 const hasButtonCreate = ref<boolean>(false)
 
 if(clientStore.client.value?.access_level === AccessLevel.technical ||
-    clientStore.client.value?.access_level === AccessLevel.technical_supervisor
+    clientStore.client.value?.access_level === AccessLevel.technical_supervisor ||
+    clientStore.client.value?.access_level === AccessLevel.admin
 ) hasButtonCreate.value = true
 
 

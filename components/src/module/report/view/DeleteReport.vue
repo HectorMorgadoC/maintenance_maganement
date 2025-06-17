@@ -3,16 +3,19 @@
         <div class="w-11/12 max-w-md bg-[#3d3b46] p-6 ">
             <h3 class="text-3xl font-medium text-[#F3ECDE] my-4 pb-2 text-center">{{ reportStore.reportItem.id_report.slice(0,6) }}</h3>
             
-            <div class="w-full text-[#EEE0D3] text-justify text-2xl mb-6">
-                <p class="my-2 px-8">
-                    Id de orden: {{ reportStore.reportItem.id_order }}
-                </p>
-                <p class="my-2 px-8">
-                    Equipo: {{ reportStore.reportItem.team }}
-                </p>
-                <p class="my-2 px-8">
-                    Tecnico: {{ reportStore.reportItem.technical }}
-                </p>
+            <div class="w-full text-[#EEE0D3] text-justify text-xl mb-6">
+                <div class="my-2 pl-2 text-justify">
+                    <span class="font-medium text-[#FC3B47]">Numero de reporte: </span> 
+                    <span class="break-all">{{ reportStore.reportItem.id_report }}</span>
+                </div>
+                <div class="my-2 pl-2 text-justify">
+                    <span class="font-medium text-[#FC3B47]">Equipo: </span> 
+                    <span class="break-all">{{ reportStore.reportItem.team }}</span>
+                </div>
+                <div class="my-2 pl-2 text-justify">
+                    <span class="font-medium text-[#FC3B47]">Tecnico: </span> 
+                    <span class="break-all">{{ reportStore.reportItem.technical }}</span>
+                </div>
             </div>
 
             <div class="flex justify-center gap-4">
@@ -34,7 +37,6 @@
 </template>
 
 <script setup lang="ts">
-import type { UUIDTypes } from 'uuid';
 import router from '../../../router';
 import { useToast } from 'vue-toastification';
 import { useReportItemStore } from '../stores/report.store';
@@ -48,11 +50,11 @@ const toast = useToast()
 
 const deleteReportForId = async() => {
     try {
-        const response = await deleteReport(reportId as UUIDTypes);
+        const response = await deleteReport(reportId);
 
         if("code" in response) {
             if(response.code === 200) {
-                toast.success("Report successfully eliminated")
+                toast.success("Registro de reporte eliminado")
                 router.replace({name: "report"})
             }
         } else {

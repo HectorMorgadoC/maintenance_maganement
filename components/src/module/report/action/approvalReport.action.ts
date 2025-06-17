@@ -4,7 +4,6 @@ import type { MessageError } from "../../common/interface/message-error.interfac
 import { isAxiosError } from "axios";
 import type { UUIDTypes } from "uuid";
 import { AccessLevel } from "../../auth/interfaces/access-level.enum";
-import type { UpdateReport } from "../interface/updateReport.interface";
 
 interface ResponseApproval {
     maintenance_approval: boolean,
@@ -12,7 +11,7 @@ interface ResponseApproval {
 }
 
 
-export const approvalReportProduction = async (idReport: UUIDTypes,aprovalStatus: boolean): 
+export const approvalReportProduction = async (idReport: string,aprovalStatus: boolean): 
 Promise< MessageError | ResponseApproval > => {
     const client = useAuthStore();
 

@@ -3,11 +3,10 @@ import { useAuthStore } from "../../auth/stores/auth.store";
 import type { MessageError } from "../../common/interface/message-error.interface";
 import { isAxiosError } from "axios";
 import type { UpdateOrder } from "../interface/updateOrder.interface";
-import type { UUIDTypes } from "uuid";
 import type { Order } from "../interface/orders.interface";
 import { AccessLevel } from "../../auth/interfaces/access-level.enum";
 
-export const updateOrder = async (updatedOrder: UpdateOrder,idOrder: UUIDTypes): 
+export const updateOrder = async (updatedOrder: UpdateOrder,idOrder: string): 
 Promise< MessageError | Order > => {
     const client = useAuthStore();
 

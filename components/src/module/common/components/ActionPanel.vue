@@ -36,14 +36,5 @@ const routeUpdate = () => {
     router.replace({name: props.router_update})
 }
 
-/*
-// Maneja la acción del primer botón
-const handlePrimaryAction = () => {
-  ;
-}
-<div class="fixed inset-0 flex items-center justify-center">
-        <div class="w-11/12 max-w-md bg-[#3d3b46] p-6 ">
 
-
-*/
 </script>
